@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css?family=Sriracha&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+
+
+body {
+
+  margin: 0;
+  font-family: 'Sriracha', cursive;
+}
+
+
+/* Navbar */
+.nav-icon {
+  width: 1.8em;
+  height: 1.8em;
+}
+
+.nav-brand {
+  font-size: 1.5em;
+}
+
+.nav-link {
+  padding-left: 1.8rem !important;
+}
+
+/* Carousel */
+.section-title {
+  font-size: 3.4vw;
+  margin: 4vw 0 3vw 0;
+  text-align: center;
+  font-family: 'Lobster', cursive;
+  
+}
+.section-title a {
+  color: rgb(83, 81, 81);
+}
+
+.section-title:hover {
+  color: rgb(143, 138, 138);
+  font-style: italic;
+  text-decoration:none;
+  
+}
+
+.carousel-inners {
+  width:80%;
+  height: 1500px;
+  margin: 0 auto 0 auto;
+  
+}
+.carousel-item{
+  transition: ease-in-out;
+  font-size: 1.4vw;
+  font-family: 'Special Elite', cursive;
+  font-weight: 0;
+  
+}
+
+
+img {
+  width:100%;
+  height: 100%;
+}
+
+.card {
+  margin: 0 1vw 0 1vw;
+  align-self: flex-start;
+}
+
+.card-img {
+  width:400px;
+  height: 600px;
+}
+
+.card-title {
+  font-size: 2vw;
+}
+
+.card-text {
+  font-size: 1.1vw;
+}
