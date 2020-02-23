@@ -22,7 +22,6 @@ import InTheater from "./inTheater";
 import "@brainhubeu/react-carousel/lib/style.css";
 import { Redirect, NavLink, Link } from "react-router-dom";
 
-//function NavBar()
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -41,8 +40,7 @@ class NavBar extends React.Component {
       isHover3: false,
       isHover4: false
     };
-    //this.handleChange = this.handleChange.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
+
     this.handleLoginRedirect = this.handleLoginRedirect.bind(this);
     this.toggle = this.toggle.bind(this);
     this.hoverme = this.hoverme.bind(this);
@@ -82,10 +80,6 @@ class NavBar extends React.Component {
   }
 
   render() {
-    // if (this.state.toLogin === true) {
-    //   return <Redirect to="/Login" />;
-    // }
-
     return (
       <div>
         <Navbar color="light" light expand="md">
