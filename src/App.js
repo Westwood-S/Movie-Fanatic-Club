@@ -1,25 +1,5 @@
-import React, { useState, Component } from "react";
-import { FaRegNewspaper, FaUserSecret } from "react-icons/fa";
-import { MdMovieFilter, MdLocationSearching } from "react-icons/md";
-import {
-  Container,
-  Row,
-  Col,
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText
-} from "reactstrap";
+import React, { Component } from "react";
 import "./index.css";
-import InTheater from "./components/inTheater";
 import "@brainhubeu/react-carousel/lib/style.css";
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";

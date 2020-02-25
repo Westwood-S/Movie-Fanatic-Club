@@ -2,20 +2,9 @@ import { NavLink } from "react-router-dom";
 import React from "react";
 import "../App.css";
 import {
-  Container,
-  Row,
-  Col,
-  Collapse,
   Navbar,
-  NavbarToggler,
-  NavbarBrand,
   Nav,
-  NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText
+  NavItem
 } from "reactstrap";
 import "../index.css";
 

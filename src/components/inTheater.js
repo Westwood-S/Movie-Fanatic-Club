@@ -10,6 +10,7 @@ import rp from "request-promise";
 import cheerio from "cheerio";
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
+import ComingSoon from "./comingSoon";
 
 class InTheater extends Component {
 
@@ -23,7 +24,7 @@ class InTheater extends Component {
       }
 
       async componentDidMount() {
-        await rp("https://cors-anywhere.herokuapp.com/https://www.imdb.com/search/title/?title_type=feature&user_rating=7.7,&groups=now-playing-us&languages=en")
+        await rp("https://cors-anywhere.herokuapp.com/https://www.imdb.com/search/title/?title_type=feature&user_rating=7.5,&groups=now-playing-us&languages=en")
         .then(html => {
           let apis= [];
           let $ = cheerio.load(html);
@@ -69,40 +70,44 @@ class InTheater extends Component {
       render() {
 
         return (
-        <div className="carousel-inners">
-            <h2 className="section-title">In Theater</h2>
-           
-            <Carousel
-                value={this.state.value}
-                onChange={this.onChange}
-                arrowLeft={<Icon name="angle-double-left" />}
-                arrowLeftDisabled={<Icon name="angle-left" />}
-                arrowRight={<Icon name="angle-double-right" />}
-                arrowRightDisabled={<Icon name="angle-right" />}
-                addArrowClickHandler
-                clickToChange
-                autoPlay={4000}
-                stopAutoPlayOnHover
-                slidesPerPage={3}
-                infinite
-                className="carousel-item"
-            >
-                      {this.state.apis.length===0?<div>loading...</div>:
-                      this.state.apis.map(item => {
-                        return(<Card key={item.title} className="card">
-                            <a title="traaaailer" href={item.trailer.link} rel = "noopener noreferrer" target="_blank"><img src={item.poster}/></a>
-                            <CardBody>
-                                <a href="/" title="more info"><CardTitle className="card-title">{item.title}</CardTitle></a>
-                                <CardSubtitle><FaImdb />{item.rating}</CardSubtitle>
-                                <CardSubtitle><TiMediaFastForward />{item.length}</CardSubtitle>
-                                {/*<CardSubtitle>Director: </CardSubtitle>*/}
-                                <CardText>Plot: {item.plot}</CardText> 
-                            </CardBody>
-                        </Card>);
-                    })}
-                    
-            </Carousel>
+          <div>
+            <div className="carousel-inners">
+              <h2 className="section-title">In Theater</h2>
+            
+              <Carousel
+                  value={this.state.value}
+                  onChange={this.onChange}
+                  arrowLeft={<Icon name="angle-double-left" />}
+                  arrowLeftDisabled={<Icon name="angle-left" />}
+                  arrowRight={<Icon name="angle-double-right" />}
+                  arrowRightDisabled={<Icon name="angle-right" />}
+                  addArrowClickHandler
+                  clickToChange
+                  autoPlay={4000}
+                  stopAutoPlayOnHover
+                  slidesPerPage={3}
+                  infinite
+                  className="carousel-item"
+              >
+                        {
+                        this.state.apis.length===0?<div>loading...</div>:
+                        this.state.apis.map(item => {
+                          return(<Card key={item.title} className="card">
+                              <a title="traaaailer" href={item.trailer.link} rel = "noopener noreferrer" target="_blank"><img alt={item.title} src={item.poster}/></a>
+                              <CardBody>
+                                  <a href="/" title="more info"><CardTitle className="card-title">{item.title}</CardTitle></a>
+                                  <CardSubtitle><FaImdb />{item.rating}</CardSubtitle>
+                                  <CardSubtitle><TiMediaFastForward />{item.length}</CardSubtitle>
+                                  {/*<CardSubtitle>Director: </CardSubtitle>*/}
+                                  <CardText>Plot: {item.plot}</CardText> 
+                              </CardBody>
+                          </Card>);
+                      })}
+                      
+              </Carousel>
 
+          </div>
+          <ComingSoon />
         </div>
         );
       }
