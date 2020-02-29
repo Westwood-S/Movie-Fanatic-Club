@@ -1,25 +1,15 @@
-import React, { useState } from "react";
-import { FaRegNewspaper, FaUserSecret } from "react-icons/fa";
+import React from "react";
+import { FaUserSecret } from "react-icons/fa";
 import { MdMovieFilter, MdLocationSearching } from "react-icons/md";
 import {
-  Container,
-  Row,
-  Col,
   Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText
+  NavItem
 } from "reactstrap";
 import "../index.css";
-import InTheater from "./inTheater";
-import "@brainhubeu/react-carousel/lib/style.css";
 import { Redirect, NavLink, Link } from "react-router-dom";
 
 class NavBar extends React.Component {
@@ -94,7 +84,7 @@ class NavBar extends React.Component {
                   <NavLink
                     to="/"
                     title="watchlist"
-                    className="nav-link"
+                    className="nav-link nav-fa"
                     onMouseEnter={() => {
                       this.hoverme(2);
                     }}
@@ -121,7 +111,7 @@ class NavBar extends React.Component {
                   <NavLink
                     to="/Login"
                     title="login"
-                    className="nav-link"
+                    className="nav-link nav-fa"
                     onMouseEnter={() => {
                       this.handleLoginRedirect();
                     }}
@@ -145,7 +135,7 @@ class NavBar extends React.Component {
                   <NavLink
                     to="/"
                     title="search"
-                    className="nav-link"
+                    className="nav-link nav-fa"
                     onMouseEnter={() => {
                       this.hoverme(4);
                     }}

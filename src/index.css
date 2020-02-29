@@ -4,11 +4,13 @@
 
 
 body {
-
   margin: 0;
   font-family: 'Sriracha', cursive;
 }
 
+a:hover {
+  text-decoration: none;
+}
 
 /* Navbar */
 .nav-icon {
@@ -21,7 +23,15 @@ body {
 }
 
 .nav-link {
-  padding-left: 1.8rem !important;
+  color: black !important;
+}
+
+.nav-link:hover {
+  color: rgba(99, 91, 91, 0.5);
+}
+
+.nav-fa {
+  padding:0 1.6rem 0 1.6rem!important;
 }
 
 /* Carousel */
@@ -36,16 +46,10 @@ body {
   color: rgb(83, 81, 81);
 }
 
-.section-title:hover {
-  color: rgb(143, 138, 138);
-  font-style: italic;
-  text-decoration:none;
-  
-}
 
 .carousel-inners {
   width:80%;
-  height: 1500px;
+  height: 1400px;
   margin: 0 auto 0 auto;
   
 }
@@ -56,7 +60,6 @@ body {
   font-weight: 0;
   
 }
-
 
 img {
   width:100%;
@@ -75,8 +78,47 @@ img {
 
 .card-title {
   font-size: 2vw;
+  color: rgb(22, 3, 192);
+}
+
+.card-title:hover {
+  color:rgb(161, 78, 150);
+  font-style: italic;
 }
 
 .card-text {
   font-size: 1.1vw;
+  padding-top: .7rem;
+  margin-bottom: 0;
 }
+
+
+/* Tabs */
+
+
+.tabs {
+  width: 80%;
+  margin: 2vw auto 20vw auto;
+}
+
+.nav-items {
+  width:70px;
+  height: 100%;
+  margin: 80px 23px 10px;
+}
+
+.media-body {
+  padding-top: 50px;
+}
+
+.media-pic {
+  width:200px;
+  height: 300px;
+}
+
+.cards-body {
+  border: none;
+  padding-top: 0;
+  margin-left: 40px;
+}
+
