@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import {
-  Card, CardText, CardBody,
-  CardTitle, CardSubtitle, 
-  Jumbotron, Button,
+  Card, CardText, 
+  CardTitle, CardSubtitle,
   TabContent, TabPane, Nav, NavItem, NavLink, Row, Col,
   Media
 } from 'reactstrap';
 import classnames from 'classnames';
-import { GiFalling } from "react-icons/gi";
 import rp from "request-promise";
 import cheerio from "cheerio";
 
@@ -45,7 +43,7 @@ class ComingSoon extends Component {
             let name = $(this).attr("href");
             let link = name.match(/(?<=title\/).*?(?=\/)/gs);
 
-            fetch("http://www.omdbapi.com/?apikey=1e54e73e&i="+link[0])
+            fetch("https://www.omdbapi.com/?apikey=1e54e73e&i="+link[0])
             .then(response => {
                 response.json().then (data =>{
                     apis.push(data);
@@ -88,15 +86,16 @@ class ComingSoon extends Component {
                         if (tabNames.includes(tabName)) return "";
                         
                         else {
-                        tabNames.push(tabName);
-                        return(<NavItem key={item} className="nav-items">
-                            <NavLink
-                                className={classnames({ active: this.state.activeTab === tabName })}
-                                onClick={() => { toggle(tabName); }}
-                            >
-                                {tabName}
-                            </NavLink>
-                        </NavItem>)}
+                          tabNames.push(tabName);
+                          return(<NavItem key={item} className="nav-items">
+                              <NavLink
+                                  className={classnames({ active: this.state.activeTab === tabName })}
+                                  onClick={() => { toggle(tabName); }}
+                              >
+                                  {tabName}
+                              </NavLink>
+                          </NavItem>)
+                        }
                     })}
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
@@ -115,7 +114,7 @@ class ComingSoon extends Component {
                                                 </Col>
                                                 <Card body className="cards-body">
                                                     <CardTitle>{data.Title}</CardTitle>
-                                                    <CardSubtitle>{data.Rated} | {data.Runtime} | {data.Genre}</CardSubtitle>
+                                                    <CardSubtitle>{data.Rated} | {data.Runtime} | {data.Genre} | {data.Released}</CardSubtitle>
                                                     <CardText>Director: {data.Director}</CardText>
                                                     <CardText>Actors: {data.Actors}</CardText>
                                                     <CardText>Plot: {data.Plot}</CardText>
