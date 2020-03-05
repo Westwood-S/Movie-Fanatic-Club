@@ -3,8 +3,6 @@ import { FaRegNewspaper, FaUserSecret} from "react-icons/fa";
 import { FiGrid } from "react-icons/fi";
 import { MdMovieFilter, MdLocationSearching} from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
-
-
 import {
   Collapse,
   Navbar,
@@ -17,18 +15,8 @@ import {
 import "../index.css";
 import { Redirect, NavLink, Link } from "react-router-dom";
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { auth } from './Firebase';
 import firebase from 'firebase';
-
-firebase.initializeApp({
-  apiKey: "AIzaSyBAiPt_zuhTaKnFil-h6G7-OghzLB0B4h4",
-  authDomain: "movie-fanatic-club.firebaseapp.com",
-  databaseURL: "https://movie-fanatic-club.firebaseio.com",
-  projectId: "movie-fanatic-club",
-  storageBucket: "movie-fanatic-club.appspot.com",
-  messagingSenderId: "574114777977",
-  appId: "1:574114777977:web:d861d1649cbd06e45b3da8",
-  measurementId: "G-D27DHGSFS4"
-});
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -119,14 +107,14 @@ class NavBar extends React.Component {
   }
 
   componentDidMount(){ 
-    firebase.auth().onAuthStateChanged(user => {
+    auth.onAuthStateChanged(user => {
       this.setState({
         isSignedIn: !!user
       })
     })
   }
 
-  // when click on the outside, the signin toggle will disappear
+  // when click on the outside, the signin popup window will disappear
   handleClick(){
     if (!this.state.isToggleSignInOpen) {
       document.addEventListener('click', this.handleOutsideClick, false);
@@ -165,7 +153,7 @@ class NavBar extends React.Component {
                     title="if you wake up in the morning and have some ideas, you have this obsession that you have to make them, then you are an artist - Marina Abramović"
                     className="nav-link nav-fa" 
                   >
-                    {firebase.auth().currentUser.displayName}
+                    {auth.currentUser.displayName}
                   </NavLink>
                 </NavItem> : ""}
                 {this.state.isSignedIn ?
@@ -271,7 +259,7 @@ class NavBar extends React.Component {
                     {this.state.isOpen ? "   login" : ""}
                   </NavLink>
                   <Popover placement="bottom" isOpen={this.state.isToggleSignInOpen} target="Popover1" toggle={this.toggleSignIn}>
-                    <StyledFirebaseAuth show={this.state.isToggleSignInOpen} uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
+                    <StyledFirebaseAuth show={this.state.isToggleSignInOpen} uiConfig={this.uiConfig} firebaseAuth={auth}/>
                   </Popover>
                 </NavItem>}
                 <NavItem>
@@ -309,7 +297,7 @@ class NavBar extends React.Component {
                         this.hoverme(6);
                       }}
                       onClick={()=>{
-                        firebase.auth().signOut()
+                        auth.signOut()
                       }}
                     >
                       {this.state.isHover6 ? (

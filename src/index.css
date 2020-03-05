@@ -131,3 +131,12 @@ img {
   margin-left: 40px;
 }
 
+.watchlist-icon {
+  color:black;
+  background-color: white;
+  border: none;
+}
+
+.watchlist-icon:hover {
+  color: black;
+}

@@ -5,9 +5,11 @@ import {
   TabContent, TabPane, Nav, NavItem, NavLink, Row, Col,
   Media
 } from 'reactstrap';
+import { FiPlusSquare } from "react-icons/fi";
 import classnames from 'classnames';
 import rp from "request-promise";
 import cheerio from "cheerio";
+import fire, { auth } from "./Firebase";
 
 class ComingSoon extends Component {
 
@@ -19,7 +21,8 @@ class ComingSoon extends Component {
             activeTab: '',
             apis:[]
         };
-        this.onChange = this.onChange.bind(this);
+
+        this.handleWatchlist = this.handleWatchlist.bind(this);
       }
 
       async componentDidMount() {
@@ -64,8 +67,11 @@ class ComingSoon extends Component {
 
       }
     
-      onChange(value) {
-        this.setState({ value })
+
+      handleWatchlist(title) {
+        let message = fire.database().ref('Li').orderByKey().limitToLast(100);
+        fire.database().ref('Li').push(title);
+        console.log('yay');
       }
       
       render() {
@@ -113,7 +119,7 @@ class ComingSoon extends Component {
                                                     </Media>
                                                 </Col>
                                                 <Card body className="cards-body">
-                                                    <CardTitle>{data.Title}</CardTitle>
+                                                    <CardTitle>{data.Title}  <button className="watchlist-icon" onClick={this.handleWatchlist('1')}><FiPlusSquare /></button></CardTitle>
                                                     <CardSubtitle>{data.Rated} | {data.Runtime} | {data.Genre} | {data.Released}</CardSubtitle>
                                                     <CardText>Director: {data.Director}</CardText>
                                                     <CardText>Actors: {data.Actors}</CardText>
