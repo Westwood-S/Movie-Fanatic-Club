@@ -1,6 +1,10 @@
 import React from "react";
-import { FaRegNewspaper, FaUserSecret, FaUserAstronaut } from "react-icons/fa";
-import { MdMovieFilter, MdLocationSearching, MdLocalMovies } from "react-icons/md";
+import { FaRegNewspaper, FaUserSecret} from "react-icons/fa";
+import { FiGrid } from "react-icons/fi";
+import { MdMovieFilter, MdLocationSearching} from "react-icons/md";
+import { IoMdLogOut } from "react-icons/io";
+
+
 import {
   Collapse,
   Navbar,
@@ -8,7 +12,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  Popover, 
+  Popover
 } from "reactstrap";
 import "../index.css";
 import { Redirect, NavLink, Link } from "react-router-dom";
@@ -50,14 +54,11 @@ class NavBar extends React.Component {
 
     this.uiConfig = {
       signInFlow: 'popup',
-      //signInSuccessUrl: '/Watchlist',
+      signInSuccessUrl: '/',
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         firebase.auth.GithubAuthProvider.PROVIDER_ID
-      ],
-      callbacks: {
-        signInSuccess: () => false
-      }
+      ]
     }
 
     this.handleLoginRedirect = this.handleLoginRedirect.bind(this);
@@ -157,35 +158,44 @@ class NavBar extends React.Component {
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
+                {this.state.isSignedIn ?
                 <NavItem>
-                  <NavLink
-                    to="/"
-                    title="watchlist"
-                    className="nav-link nav-fa"
-                    onMouseEnter={() => {
-                      this.hoverme(2);
+                  <NavLink 
+                    to="/" 
+                    title="if you wake up in the morning and have some ideas, you have this obsession that you have to make them, then you are an artist - Marina Abramović"
+                    className="nav-link nav-fa" 
+                  >
+                    {firebase.auth().currentUser.displayName}
+                  </NavLink>
+                </NavItem> : ""}
+                {this.state.isSignedIn ?
+                <NavItem>
+                  <NavLink 
+                    to="/Watchlist" 
+                    className="nav-link nav-fa" 
+                    onMouseEnter={()=>{
+                      this.hoverme(5);
                     }}
-                    onMouseOut={() => {
-                      this.hoverme(2);
+                    onMouseOut={()=>{
+                      this.hoverme(5);
                     }}
                   >
-                    {this.state.isHover2 ? (
+                    {this.state.isHover5 ? (
                       this.state.isOpen ? (
-                        <MdMovieFilter className="nav-icon" />
+                        <MdMovieFilter className="nav-icon"/>
                       ) : (
-                        "explore"
+                        "watchlist"
                       )
                     ) : (
-                      <MdMovieFilter className="nav-icon" />
+                      <MdMovieFilter className="nav-icon"/>
                     )}
-                    {this.state.isOpen ? "    explore" : ""}
+                    {this.state.isOpen?"   watchlist":""}
                   </NavLink>
-                </NavItem>
+                </NavItem> : ""}
                 {this.state.isSignedIn ?
                 <NavItem>
                     <NavLink 
-                      to="/" 
-                      title="notification" 
+                      to="/"  
                       className="nav-link nav-fa" 
                       onMouseEnter={()=>{
                         this.hoverme(1);
@@ -206,64 +216,33 @@ class NavBar extends React.Component {
                       {this.state.isOpen?"   notification":""}
                     </NavLink>
                   </NavItem> : ""}
-                {this.state.isSignedIn ?
-                <NavItem>
-                  <NavLink 
-                    to="/Watchlist" 
-                    title="watchlist" 
-                    className="nav-link nav-fa" 
-                    onMouseEnter={()=>{
-                      this.hoverme(5);
-                    }}
-                    onMouseOut={()=>{
-                      this.hoverme(5);
-                    }}
-                  >
-                    {this.state.isHover5 ? (
-                      this.state.isOpen ? (
-                        <MdLocalMovies className="nav-icon"/>
-                      ) : (
-                        "watchlist"
-                      )
-                    ) : (
-                      <MdLocalMovies className="nav-icon"/>
-                    )}
-                    {this.state.isOpen?"   watchlist":""}
-                  </NavLink>
-                </NavItem> : ""}
-                {this.state.isSignedIn ?
-                <NavItem>
-                  <NavLink 
-                    to="/" 
-                    title="logout" 
-                    className="nav-link nav-fa" 
-                    onMouseEnter={()=>{
-                      this.hoverme(6);
-                    }}
-                    onMouseOut={()=>{
-                      this.hoverme(6);
-                    }}
-                    onClick={()=> {
-                      firebase.auth().signOut();
-                    }}
-                  >
-                    {this.state.isHover6 ? (
-                      this.state.isOpen ? (
-                        <FaUserAstronaut className="nav-icon"/>
-                      ) : (
-                        "logout"
-                      )
-                    ) : (
-                      <FaUserAstronaut className="nav-icon"/>
-                    )}
-                    {this.state.isOpen?"   logout":""}
-                  </NavLink>
-                </NavItem> : ""}
-                {/* {this.state.isSignedIn ? "": */}
                 <NavItem>
                   <NavLink
                     to="/"
-                    title="login"
+                    className="nav-link nav-fa"
+                    onMouseEnter={() => {
+                      this.hoverme(2);
+                    }}
+                    onMouseOut={() => {
+                      this.hoverme(2);
+                    }}
+                  >
+                    {this.state.isHover2 ? (
+                      this.state.isOpen ? (
+                        <FiGrid className="nav-icon" />
+                      ) : (
+                        "explore"
+                      )
+                    ) : (
+                      <FiGrid className="nav-icon" />
+                    )}
+                    {this.state.isOpen ? "    explore" : ""}
+                  </NavLink>
+                </NavItem>
+                {this.state.isSignedIn ? "": 
+                <NavItem>
+                  <NavLink
+                    to="/"
                     className="nav-link nav-fa"
                     onMouseEnter={() => {
                       this.handleLoginRedirect();
@@ -294,11 +273,10 @@ class NavBar extends React.Component {
                   <Popover placement="bottom" isOpen={this.state.isToggleSignInOpen} target="Popover1" toggle={this.toggleSignIn}>
                     <StyledFirebaseAuth show={this.state.isToggleSignInOpen} uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
                   </Popover>
-                </NavItem>
+                </NavItem>}
                 <NavItem>
                   <NavLink
                     to="/"
-                    title="search"
                     className="nav-link nav-fa"
                     onMouseEnter={() => {
                       this.hoverme(4);
@@ -319,6 +297,33 @@ class NavBar extends React.Component {
                     {this.state.isOpen ? "   search" : ""}
                   </NavLink>
                 </NavItem>
+                {this.state.isSignedIn ?
+                <NavItem>
+                    <NavLink 
+                      to="/"  
+                      className="nav-link nav-fa" 
+                      onMouseEnter={()=>{
+                        this.hoverme(6);
+                      }}
+                      onMouseOut={()=>{
+                        this.hoverme(6);
+                      }}
+                      onClick={()=>{
+                        firebase.auth().signOut()
+                      }}
+                    >
+                      {this.state.isHover6 ? (
+                        this.state.isOpen ? (
+                          <IoMdLogOut className="nav-icon"/>
+                        ) : (
+                          "logout"
+                        )
+                      ) : (
+                        <IoMdLogOut className="nav-icon"/>
+                      )}
+                      {this.state.isOpen?"   logout":""}
+                    </NavLink>
+                  </NavItem> : ""}
               </Nav>
             </Collapse>
           </div>
