@@ -9,7 +9,6 @@ import { FiPlusSquare } from "react-icons/fi";
 import classnames from 'classnames';
 import rp from "request-promise";
 import cheerio from "cheerio";
-import fire, { auth } from "./Firebase";
 
 class ComingSoon extends Component {
 
@@ -21,8 +20,6 @@ class ComingSoon extends Component {
             activeTab: '',
             apis:[]
         };
-
-        this.handleWatchlist = this.handleWatchlist.bind(this);
       }
 
       async componentDidMount() {
@@ -64,15 +61,8 @@ class ComingSoon extends Component {
         .catch(function(err) {
           console.log(err);
         });
-
       }
-    
 
-      handleWatchlist(title) {
-        let message = fire.database().ref('Li').orderByKey().limitToLast(100);
-        fire.database().ref('Li').push(title);
-        console.log('yay');
-      }
       
       render() {
         const toggle = tab => {
@@ -119,7 +109,7 @@ class ComingSoon extends Component {
                                                     </Media>
                                                 </Col>
                                                 <Card body className="cards-body">
-                                                    <CardTitle>{data.Title}  <button className="watchlist-icon" onClick={this.handleWatchlist('1')}><FiPlusSquare /></button></CardTitle>
+                                                    <CardTitle>{data.Title}  <button className="watchlist-icon" /* onClick={this.handleWatchlist('1') } */><FiPlusSquare /></button></CardTitle>
                                                     <CardSubtitle>{data.Rated} | {data.Runtime} | {data.Genre} | {data.Released}</CardSubtitle>
                                                     <CardText>Director: {data.Director}</CardText>
                                                     <CardText>Actors: {data.Actors}</CardText>
