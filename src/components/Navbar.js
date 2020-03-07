@@ -1,6 +1,6 @@
 import React from "react";
 import { FaRegNewspaper, FaUserSecret} from "react-icons/fa";
-import { FiGrid } from "react-icons/fi";
+import { FiGrid, FiSearch, FiXCircle } from "react-icons/fi";
 import { MdMovieFilter, MdLocationSearching} from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 import {
@@ -10,7 +10,10 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  Popover
+  Popover,
+  Button,
+  Input,
+  Modal, ModalBody
 } from "reactstrap";
 import "../index.css";
 import { Redirect, NavLink, Link } from "react-router-dom";                        
@@ -30,8 +33,9 @@ class NavBar extends React.Component {
     this.state = {
       value: "",
       isSignedIn: false,
-      isToggleSignInOpen: false,
       isOpen: false,
+      isToggleSignInOpen: false,
+      isToggleSearchOpen: false,
       isHover1: false, 
       isHover2: false,
       isHover3: false,
@@ -50,8 +54,10 @@ class NavBar extends React.Component {
     }
 
     this.handleLoginRedirect = this.handleLoginRedirect.bind(this);
-    this.toggleSignIn = this.toggleSignIn.bind(this);
+    
     this.toggle = this.toggle.bind(this);
+    this.toggleSignIn = this.toggleSignIn.bind(this);
+    this.toggleSearch = this.toggleSearch.bind(this);
     this.hoverme = this.hoverme.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
@@ -76,6 +82,13 @@ class NavBar extends React.Component {
     this.setState(() => ({
       isToggleSignInOpen: !this.state.isToggleSignInOpen
     }));
+  }
+
+  //search collapse
+  toggleSearch(){
+    this.setState(()=>({
+      isToggleSearchOpen: !this.state.isToggleSearchOpen
+    }))
   }
 
   hoverme(num) {
@@ -290,6 +303,9 @@ class NavBar extends React.Component {
                     onMouseOut={() => {
                       this.hoverme(4);
                     }}
+                    onClick={() =>{
+                      this.toggleSearch();
+                    }}
                   >
                     {this.state.isHover4 ? (
                       this.state.isOpen ? (
@@ -302,6 +318,13 @@ class NavBar extends React.Component {
                     )}
                     {this.state.isOpen ? "   search" : ""}
                   </NavLink>
+                  <Modal isOpen={this.state.isToggleSearchOpen} toggle={this.toggleSearch}>
+                    <ModalBody>
+                      <Input></Input>
+                      <Button color="secondary" onClick={this.toggleSearch}>search me <FiSearch /></Button>{' '}
+                      <Button color="secondary" onClick={this.toggleSearch}>maybe later <FiXCircle /></Button>
+                    </ModalBody>
+                  </Modal>
                 </NavItem>
                 {this.state.isSignedIn ?
                 <NavItem>
