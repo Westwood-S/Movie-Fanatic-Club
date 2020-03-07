@@ -140,3 +140,103 @@ img {
 .watchlist-icon:hover {
   color: black;
 }
+
+/* explore */
+.btn-row {
+  padding: 60px;
+}
+
+.btn-explore, .btn-explore:visited, .btn-explore:focus{
+  width: 400px;
+  height: 200px;
+  border-radius: 50px;
+  border: 0px;
+  color: rgb(170, 170, 170);
+  font-size: 30px;
+  transition: none;
+  background-color: white;
+  background-position: center !important;
+}
+.btn-explore:hover, .btn-explore:active {
+  border-radius: 50px;
+  border: 0;
+  color: rgb(0, 0, 0);
+  box-shadow: none;
+  transition: none;
+  background-color: white;
+  background-position: center;
+}
+
+.Action{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,643,1000_AL_.jpg);
+}
+
+.Adventure{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,675,1000_AL_.jpg);
+}
+
+.Animation{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_SY1000_CR0,0,672,1000_AL_.jpg);
+}
+
+.Biography{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_SY1000_CR0,0,674,1000_AL_.jpg);
+}
+
+.Crime{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,686,1000_AL_.jpg);
+}
+
+.Documentary{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BNGU2OGJkZTItYmRmNi00YTI2LWFkNzEtNjY2MGZiZTRhMzRkXkEyXkFqcGdeQXVyMjYwNDA2MDE@._V1_.jpg);
+}
+
+.Drama{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg);
+}
+
+.Film-Noir{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BYTc1NGViOTMtNjZhNS00OGY2LWI4MmItOWQwNTY4MDMzNWI3L2ltYWdlXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SY1000_SX654_AL_.jpg);
+}
+
+.History{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BMjExMTEzODkyN15BMl5BanBnXkFtZTcwNTU4NTc4OQ@@._V1_.jpg);
+}
+
+.Horror{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BNTQwNDM1YzItNDAxZC00NWY2LTk0M2UtNDIwNWI5OGUyNWUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,672,1000_AL_.jpg);
+}
+
+.Music{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BOTA5NDZlZGUtMjAxOS00YTRkLTkwYmMtYWQ0NWEwZDZiNjEzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX675_CR0,0,675,999_AL_.jpg);
+}
+
+.Musical{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BMTQ4NDI3NDg4M15BMl5BanBnXkFtZTcwMjY5OTI1OA@@._V1_SY1000_CR0,0,674,1000_AL_.jpg);
+}
+
+.Mystery{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BZTcyNjk1MjgtOWI3Mi00YzQwLWI5MTktMzY4ZmI2NDAyNzYzXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,681,1000_AL_.jpg);
+}
+
+.Romance{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BNDg4NjM1YjMtYmNhZC00MjM0LWFiZmYtNGY1YjA3MzZmODc5XkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SY1000_CR0,0,666,1000_AL_.jpg);
+}
+
+.Sci-Fi{
+  background-image: url(https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,665,1000_AL_.jpg);
+}
+
+.War{
+  background: url(https://m.media-amazon.com/images/M/MV5BY2IzZGY2YmEtYzljNS00NTM5LTgwMzUtMzM1NjQ4NGI0OTk0XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_.jpg);
+}
+
+/* footer */
+
+.nav-links {
+  color: black;
+  margin: 30px 10px;
+}
+.nav-links:hover{
+  color:rgb(161, 78, 150);
+}

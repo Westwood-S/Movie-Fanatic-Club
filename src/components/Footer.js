@@ -21,18 +21,15 @@ class Footer extends React.Component {
             <div className="container">
               <Nav className="mr-auto" navbar>
                 <NavItem >
-                  <NavLink className="nav-link" to="/">Home</NavLink>
+                  <NavLink className="nav-links" to="/">Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="views/Aboutus.js">About us</NavLink>
+                  <NavLink className="nav-links" to="./Aboutus.js">About us</NavLink>
                 </NavItem>
               </Nav>
               <p style={{ margin: 0 }}>
                 © {new Date().getFullYear()}{" "}
-                <a href="/">
-                  Mo &amp; Li‘s
-                </a>
-                .
+                Mo &amp; Li‘s.
               </p>
             </div>
           </Navbar>

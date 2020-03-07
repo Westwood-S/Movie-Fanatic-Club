@@ -5,7 +5,6 @@ import {
 } from 'reactstrap';
 import { FaImdb } from "react-icons/fa";
 import { TiMediaFastForward } from "react-icons/ti";
-import { FiPlusSquare } from "react-icons/fi";
 import Icon from 'react-fa';
 import rp from "request-promise";
 import cheerio from "cheerio";
@@ -67,7 +66,7 @@ class InTheater extends Component {
       onChange(value) {
         this.setState({ value })
       }
-      
+
       render() {
 
         return (
@@ -96,7 +95,7 @@ class InTheater extends Component {
                           return(<Card key={item.title} className="card">
                               <a title="traaaailer" href={item.trailer.link} rel = "noopener noreferrer" target="_blank"><img alt={item.title} src={item.poster}/></a>
                               <CardBody>
-                                  <CardTitle ><a href="/" title="more info" className="card-title">{item.title}</a> <button className="watchlist-icon"><FiPlusSquare /></button></CardTitle>
+                                  <CardTitle ><a href={"https://www.imdb.com/title/"+item.id} rel = "noopener noreferrer" target="_blank" title="more info" className="card-title">{item.title}</a></CardTitle>
                                   <CardSubtitle><FaImdb />{item.rating}</CardSubtitle>
                                   <CardSubtitle><TiMediaFastForward />{item.length}</CardSubtitle>
                                   {/*<CardSubtitle>Director: </CardSubtitle>*/}

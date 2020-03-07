@@ -5,7 +5,6 @@ import {
   TabContent, TabPane, Nav, NavItem, NavLink, Row, Col,
   Media
 } from 'reactstrap';
-import { FiPlusSquare } from "react-icons/fi";
 import classnames from 'classnames';
 import rp from "request-promise";
 import cheerio from "cheerio";
@@ -20,6 +19,8 @@ class ComingSoon extends Component {
             activeTab: '',
             apis:[]
         };
+
+        this.handleWatchlist = this.handleWatchlist.bind(this);
       }
 
       async componentDidMount() {
@@ -61,6 +62,9 @@ class ComingSoon extends Component {
         .catch(function(err) {
           console.log(err);
         });
+      }
+
+      handleWatchlist(){
       }
 
       
@@ -105,11 +109,11 @@ class ComingSoon extends Component {
                                             <Media className="media-body">
                                                 <Col sm="3">
                                                     <Media left className="media-pic" >
-                                                        <a title="link" rel = "noopener noreferrer" target="_blank" className="media-pic"><img alt={data.Title} src={data.Poster}/></a>
+                                                        <a href={"https://www.imdb.com/title/"+data.imdbID} title="link" rel = "noopener noreferrer" target="_blank" className="media-pic"><img alt={data.Title} src={data.Poster}/></a>
                                                     </Media>
                                                 </Col>
                                                 <Card body className="cards-body">
-                                                    <CardTitle>{data.Title}  <button className="watchlist-icon" /* onClick={this.handleWatchlist('1') } */><FiPlusSquare /></button></CardTitle>
+                                                    <CardTitle><a href={"https://www.imdb.com/title/"+data.imdbID} title="more info" className="card-title" rel = "noopener noreferrer" target="_blank">{data.Title}</a> </CardTitle>
                                                     <CardSubtitle>{data.Rated} | {data.Runtime} | {data.Genre} | {data.Released}</CardSubtitle>
                                                     <CardText>Director: {data.Director}</CardText>
                                                     <CardText>Actors: {data.Actors}</CardText>

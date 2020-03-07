@@ -13,9 +13,9 @@ import {
   Popover
 } from "reactstrap";
 import "../index.css";
-import { Redirect, NavLink, Link } from "react-router-dom";
+import { Redirect, NavLink, Link } from "react-router-dom";                        
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { auth } from './Firebase';
+import { auth, db } from './Firebase';
 import firebase from 'firebase';
 
 class NavBar extends React.Component {
@@ -111,6 +111,24 @@ class NavBar extends React.Component {
       this.setState({
         isSignedIn: !!user
       })
+      if (user){
+        db
+          .collection("user").doc(auth.currentUser.email)
+          .set({
+            name: auth.currentUser.displayName,
+            email: auth.currentUser.email,
+            photo: auth.currentUser.photoURL,
+            uid: auth.currentUser.uid,
+            watchlist: []
+          })
+          .then(function(){
+            console.log('yay')
+          })
+          .catch(function(error){
+            console.log(error)
+          })
+
+      }
     })
   }
 
@@ -206,7 +224,7 @@ class NavBar extends React.Component {
                   </NavItem> : ""}
                 <NavItem>
                   <NavLink
-                    to="/"
+                    to="./Explore"
                     className="nav-link nav-fa"
                     onMouseEnter={() => {
                       this.hoverme(2);
