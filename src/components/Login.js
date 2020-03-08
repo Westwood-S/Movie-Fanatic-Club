@@ -1,5 +1,5 @@
 import React from "react";
-import "../App.css";
+import "../index.css";
 import { NavLink } from "react-router-dom";
 
 class Login extends React.Component {

@@ -1,25 +1,20 @@
 import React from "react";
 import { FaRegNewspaper, FaUserSecret} from "react-icons/fa";
-import { FiGrid, FiSearch, FiXCircle } from "react-icons/fi";
+import { FiGrid, FiXCircle } from "react-icons/fi";
 import { MdMovieFilter, MdLocationSearching} from "react-icons/md";
 import { IoMdLogOut } from "react-icons/io";
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  Popover,
-  Button,
-  Input,
-  Modal, ModalBody
+  Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem,
+  Popover, Button,
+  Modal, ModalBody, ModalFooter,
+  Media, Col, Row, Card, CardText, CardTitle, CardSubtitle,
 } from "reactstrap";
 import "../index.css";
 import { Redirect, NavLink, Link } from "react-router-dom";                        
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { auth, db } from './Firebase';
 import firebase from 'firebase';
+import Search from "./Search";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -41,7 +36,9 @@ class NavBar extends React.Component {
       isHover3: false,
       isHover4: false,
       isHover5: false,
-      isHover6: false
+      isHover6: false,
+      searchLoading: true,
+      movies: []
     };
 
     this.uiConfig = {
@@ -61,6 +58,7 @@ class NavBar extends React.Component {
     this.hoverme = this.hoverme.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    this.search = this.search.bind(this);
   }
 
   handleLoginRedirect(event) {
@@ -87,7 +85,8 @@ class NavBar extends React.Component {
   //search collapse
   toggleSearch(){
     this.setState(()=>({
-      isToggleSearchOpen: !this.state.isToggleSearchOpen
+      isToggleSearchOpen: !this.state.isToggleSearchOpen,
+      movies: []
     }))
   }
 
@@ -135,7 +134,7 @@ class NavBar extends React.Component {
             watchlist: []
           })
           .then(function(){
-            console.log('yay')
+            console.log('yay db')
           })
           .catch(function(error){
             console.log(error)
@@ -164,6 +163,26 @@ class NavBar extends React.Component {
     }
     
     this.handleClick();
+  }
+
+  search(searchValue){
+    this.setState({
+      searchLoading: true,
+      movies: []
+    })
+
+    fetch('https://www.omdbapi.com/?apikey=1e54e73e&s='+searchValue)
+    .then(response => {
+      response.json().then (data =>{
+          this.setState({
+            movies: data.Search
+          })
+          console.log(this.state.movies)
+      })
+    })
+    .catch(err => {
+        console.log(err);
+    }); 
   }
 
   render() {
@@ -319,11 +338,23 @@ class NavBar extends React.Component {
                     {this.state.isOpen ? "   search" : ""}
                   </NavLink>
                   <Modal isOpen={this.state.isToggleSearchOpen} toggle={this.toggleSearch}>
-                    <ModalBody>
-                      <Input></Input>
-                      <Button color="secondary" onClick={this.toggleSearch}>search me <FiSearch /></Button>{' '}
-                      <Button color="secondary" onClick={this.toggleSearch}>maybe later <FiXCircle /></Button>
+                    <ModalBody className="modal-body">
+                      <Search search={this.search}/>
+                      <Button className="btn-search" color="link" onClick={this.toggleSearch}>maybe later <FiXCircle /></Button>
                     </ModalBody>
+                    {this.state.movies.map((movie, index)=>(
+                      <ModalBody key={movie.Title}>
+                        <Media>
+                          <Media left className="search-pic" >
+                              <img alt={movie.Title} src={movie.Poster}/>
+                          </Media>
+                          <Media body className="media-title">
+                            <Media heading className="media-heading">{index+1}. {movie.Title} ({movie.Year})</Media>
+                          </Media>
+                        </Media>
+                      </ModalBody>
+                    ))
+                    }
                   </Modal>
                 </NavItem>
                 {this.state.isSignedIn ?

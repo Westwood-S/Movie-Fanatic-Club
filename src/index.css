@@ -43,6 +43,31 @@ a:hover {
   background-color: rgba(99, 91, 91, 0.5);
 }
 
+.btn-search {
+  color: rgb(22, 3, 192);
+}
+
+.btn-search:hover {
+  color:rgb(161, 78, 150);
+  text-decoration: none;
+}
+
+.search-pic {
+  width: 60px;
+  height: 80px;
+}
+
+.modal-body {
+  padding-bottom: 0;
+}
+.media-title {
+  padding: 30px 0 0 20px !important;
+}
+
+.media-heading {
+  font-size: 1rem;
+}
+
 /* Carousel */
 .section-title {
   font-size: 3.4vw;

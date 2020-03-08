@@ -1,7 +1,7 @@
 // user account landing page (when you log in)
 
 import React from "react";
-import "../App.css";
+import "../index.css";
 import { NavLink } from "react-router-dom";
 
 class Account extends React.Component {

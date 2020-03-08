@@ -90,7 +90,7 @@ class InTheater extends Component {
                   className="carousel-item"
               >
                         {
-                        this.state.apis.length===0?<div>loading...</div>:
+                        this.state.apis.length===0?<div>i&apos;m gettin there...</div>:
                         this.state.apis.map(item => {
                           return(<Card key={item.title} className="card">
                               <a title="traaaailer" href={item.trailer.link} rel = "noopener noreferrer" target="_blank"><img alt={item.title} src={item.poster}/></a>

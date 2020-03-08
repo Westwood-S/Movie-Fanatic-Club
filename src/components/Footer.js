@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React from "react";
-import "../App.css";
+import "../index.css";
 import {
   Navbar,
   Nav,
@@ -29,7 +29,7 @@ class Footer extends React.Component {
               </Nav>
               <p style={{ margin: 0 }}>
                 © {new Date().getFullYear()}{" "}
-                Mo &amp; Li‘s.
+                Mo &amp; Li&apos;s.
               </p>
             </div>
           </Navbar>

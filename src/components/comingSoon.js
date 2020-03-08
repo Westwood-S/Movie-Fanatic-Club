@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Card, CardText, 
+  CardText, 
   CardTitle, CardSubtitle,
   TabContent, TabPane, Nav, NavItem, NavLink, Row, Col,
   Media
@@ -107,18 +107,16 @@ class ComingSoon extends Component {
                                     .map(data => {
                                         return (<Col sm="6" key={data.Title}>
                                             <Media className="media-body">
-                                                <Col sm="3">
                                                     <Media left className="media-pic" >
                                                         <a href={"https://www.imdb.com/title/"+data.imdbID} title="link" rel = "noopener noreferrer" target="_blank" className="media-pic"><img alt={data.Title} src={data.Poster}/></a>
                                                     </Media>
-                                                </Col>
-                                                <Card body className="cards-body">
+                                                <Media body className="cards-body">
                                                     <CardTitle><a href={"https://www.imdb.com/title/"+data.imdbID} title="more info" className="card-title" rel = "noopener noreferrer" target="_blank">{data.Title}</a> </CardTitle>
                                                     <CardSubtitle>{data.Rated} | {data.Runtime} | {data.Genre} | {data.Released}</CardSubtitle>
                                                     <CardText>Director: {data.Director}</CardText>
                                                     <CardText>Actors: {data.Actors}</CardText>
                                                     <CardText>Plot: {data.Plot}</CardText>
-                                                </Card>
+                                                </Media>
                                             </Media>
                                     </Col>)
                                     })

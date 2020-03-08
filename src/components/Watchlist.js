@@ -1,7 +1,7 @@
 // body component for a user's watchlist
 
 import React from "react";
-import "../App.css";
+import "../index.css";
 import { NavLink } from "react-router-dom";
 
 class Watchlist extends React.Component {
