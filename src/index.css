@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Sriracha&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Special+Elite&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bangers&display=swap');
 
 body {
   margin: 0;
@@ -50,6 +52,7 @@ a:hover {
 .btn-search:hover {
   color:rgb(161, 78, 150);
   text-decoration: none;
+  font-style: italic;
 }
 
 .search-pic {
@@ -66,6 +69,12 @@ a:hover {
 
 .media-heading {
   font-size: 1rem;
+  color: rgb(22, 3, 192);
+}
+
+.media-heading:hover {
+  color:rgb(161, 78, 150);
+  font-style: italic;
 }
 
 /* Carousel */
@@ -135,6 +144,14 @@ img {
   margin: 2vw auto 20vw auto;
 }
 
+.tab-btn{
+  border-top: none;
+  border-left:  none;
+  border-right: none;
+  border-bottom:   solid 1px #dee2e6;
+  background-color: white;
+}
+
 .nav-items {
   width:70px;
   height: 100%;
@@ -176,7 +193,7 @@ img {
   height: 200px;
   border-radius: 50px;
   border: 0px;
-  color: rgb(170, 170, 170);
+  color: rgb(255, 255, 255);
   font-size: 30px;
   transition: none;
   background-color: white;
@@ -256,6 +273,85 @@ img {
   background: url(https://m.media-amazon.com/images/M/MV5BY2IzZGY2YmEtYzljNS00NTM5LTgwMzUtMzM1NjQ4NGI0OTk0XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_.jpg);
 }
 
+/* moive */
+.movie-title {
+  width: 100%;
+  padding: 5rem 0 4rem 0;
+  font-size: 4vw;
+  color: rgb(22, 3, 192);
+  text-align: center;
+  font-family: 'Lobster', cursive;
+}
+
+.movie-title:hover {
+  color:rgb(161, 78, 150);
+  font-style: italic;
+  text-align: center;
+  font-family: 'Lobster', cursive;
+}
+
+.movie-poster {
+  width: 100%;
+  text-align: center;
+}
+
+.movie-actual-poster{
+  width: 60%;
+}
+
+.movie-director{
+  width: 100%;
+  font-size: 2.3vw;
+  padding: 3rem 0 2rem 0;
+  text-align: center;
+  color: rgb(22, 3, 192);
+  font-style: italic;
+  font-family: 'Lobster', cursive;
+}
+
+.movie-info{
+  width: 100%;
+  font-size: 1.2vw;
+  padding: .8rem 0 .8rem 0;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+}
+
+.movie-actor {
+  width: 100%;
+  font-size: 2vw;
+  padding: 2rem 0 0 0;
+  text-align: center;
+  font-family: 'Lobster', cursive;
+}
+
+.movie-actor-link{
+  color: rgb(22, 3, 192);
+  text-align: center;
+  font-size: 2.5vw;
+}
+
+.movie-actor-link:hover{
+  color:rgb(161, 78, 150);
+  font-style: italic;
+  font-size: 2.5vw;
+}
+
+
+.movie-btn {
+  width: 100%;
+  padding: 3rem 0 3rem 0;
+  text-align: center;
+  color: black;
+}
+
+.movie-rl-btn{
+  background-color: white;
+  color: black;
+  font-size: 3vw;
+  border: none;
+}
+
 /* footer */
 
 .nav-links {
@@ -265,3 +361,4 @@ img {
 .nav-links:hover{
   color:rgb(161, 78, 150);
 }
+

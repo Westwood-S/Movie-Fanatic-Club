@@ -11,6 +11,7 @@ import cheerio from "cheerio";
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 import ComingSoon from "./comingSoon";
+import { NavLink } from "react-router-dom";  
 
 class InTheater extends Component {
 
@@ -95,7 +96,17 @@ class InTheater extends Component {
                           return(<Card key={item.title} className="card">
                               <a title="traaaailer" href={item.trailer.link} rel = "noopener noreferrer" target="_blank"><img alt={item.title} src={item.poster}/></a>
                               <CardBody>
-                                  <CardTitle ><a href={"https://www.imdb.com/title/"+item.id} rel = "noopener noreferrer" target="_blank" title="more info" className="card-title">{item.title}</a></CardTitle>
+                                  <CardTitle >
+                                      <NavLink
+                                        to={{
+                                          pathname: './Movie',
+                                          id: item.id
+                                        }}
+                                        className="card-title"
+                                      >
+                                        {item.title}
+                                      </NavLink>
+                                  </CardTitle>
                                   <CardSubtitle><FaImdb />{item.rating}</CardSubtitle>
                                   <CardSubtitle><TiMediaFastForward />{item.length}</CardSubtitle>
                                   {/*<CardSubtitle>Director: </CardSubtitle>*/}

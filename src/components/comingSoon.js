@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import {
   CardText, 
   CardTitle, CardSubtitle,
-  TabContent, TabPane, Nav, NavItem, NavLink, Row, Col,
-  Media
+  TabContent, TabPane, Nav, NavItem, Row, Col,
+  Media,
+  Button
 } from 'reactstrap';
 import classnames from 'classnames';
 import rp from "request-promise";
 import cheerio from "cheerio";
+import { NavLink } from "react-router-dom";  
 
 class ComingSoon extends Component {
 
@@ -88,12 +90,12 @@ class ComingSoon extends Component {
                         else {
                           tabNames.push(tabName);
                           return(<NavItem key={item} className="nav-items">
-                              <NavLink
+                              <a
                                   className={classnames({ active: this.state.activeTab === tabName })}
                                   onClick={() => { toggle(tabName); }}
                               >
-                                  {tabName}
-                              </NavLink>
+                                  <button className="tab-btn">{tabName}</button>
+                              </a>
                           </NavItem>)
                         }
                     })}
@@ -111,7 +113,17 @@ class ComingSoon extends Component {
                                                         <a href={"https://www.imdb.com/title/"+data.imdbID} title="link" rel = "noopener noreferrer" target="_blank" className="media-pic"><img alt={data.Title} src={data.Poster}/></a>
                                                     </Media>
                                                 <Media body className="cards-body">
-                                                    <CardTitle><a href={"https://www.imdb.com/title/"+data.imdbID} title="more info" className="card-title" rel = "noopener noreferrer" target="_blank">{data.Title}</a> </CardTitle>
+                                                    <CardTitle>
+                                                      <NavLink
+                                                        to={{
+                                                          pathname: './Movie',
+                                                          id: data.imdbID
+                                                        }}
+                                                        className="card-title"
+                                                      >
+                                                        {data.Title}
+                                                      </NavLink>
+                                                    </CardTitle>
                                                     <CardSubtitle>{data.Rated} | {data.Runtime} | {data.Genre} | {data.Released}</CardSubtitle>
                                                     <CardText>Director: {data.Director}</CardText>
                                                     <CardText>Actors: {data.Actors}</CardText>

@@ -6,8 +6,7 @@ import { IoMdLogOut } from "react-icons/io";
 import {
   Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem,
   Popover, Button,
-  Modal, ModalBody, ModalFooter,
-  Media, Col, Row, Card, CardText, CardTitle, CardSubtitle,
+  Modal, ModalBody, Media
 } from "reactstrap";
 import "../index.css";
 import { Redirect, NavLink, Link } from "react-router-dom";                        
@@ -165,6 +164,7 @@ class NavBar extends React.Component {
     this.handleClick();
   }
 
+  //search omdb api
   search(searchValue){
     this.setState({
       searchLoading: true,
@@ -177,7 +177,6 @@ class NavBar extends React.Component {
           this.setState({
             movies: data.Search
           })
-          console.log(this.state.movies)
       })
     })
     .catch(err => {
@@ -342,19 +341,27 @@ class NavBar extends React.Component {
                       <Search search={this.search}/>
                       <Button className="btn-search" color="link" onClick={this.toggleSearch}>maybe later <FiXCircle /></Button>
                     </ModalBody>
-                    {this.state.movies.map((movie, index)=>(
-                      <ModalBody key={movie.Title}>
-                        <Media>
-                          <Media left className="search-pic" >
-                              <img alt={movie.Title} src={movie.Poster}/>
+                    {this.state.movies?this.state.movies.map((movie, index)=>(
+                      <NavLink
+                        key={movie.Title}
+                        to={{
+                          pathname: './Movie',
+                          id: movie.imdbID
+                        }}
+                      >
+                        <ModalBody >
+                          <Media>
+                            <Media left className="search-pic" >
+                                <img alt={movie.Title} src={movie.Poster}/>
+                            </Media>
+                            <Media body className="media-title">
+                              <Media heading className="media-heading">{index+1}. {movie.Title} ({movie.Year})</Media>
+                            </Media>
                           </Media>
-                          <Media body className="media-title">
-                            <Media heading className="media-heading">{index+1}. {movie.Title} ({movie.Year})</Media>
-                          </Media>
-                        </Media>
-                      </ModalBody>
+                        </ModalBody>
+                      </NavLink>
                     ))
-                    }
+                    :""}
                   </Modal>
                 </NavItem>
                 {this.state.isSignedIn ?
