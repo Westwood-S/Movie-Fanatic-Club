@@ -40,7 +40,7 @@ class Watchlist extends React.Component {
             for (let i = 0; i < doc.data().watchlist.length; i++) {
               let name = doc.data().watchlist[i];
               fetch(
-                "https://imdb-internet-movie-database-unofficial.p.rapidapi.com/title/" +
+                "https://cors-anywhere.herokuapp.com/https://imdb-internet-movie-database-unofficial.p.rapidapi.com/title/" +
                   name,
                 {
                   method: "GET",
