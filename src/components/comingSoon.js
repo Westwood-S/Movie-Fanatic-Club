@@ -3,8 +3,7 @@ import {
   CardText, 
   CardTitle, CardSubtitle,
   TabContent, TabPane, Nav, NavItem, Row, Col,
-  Media,
-  Button
+  Media
 } from 'reactstrap';
 import classnames from 'classnames';
 import rp from "request-promise";
@@ -90,12 +89,12 @@ class ComingSoon extends Component {
                         else {
                           tabNames.push(tabName);
                           return(<NavItem key={item} className="nav-items">
-                              <a
+                              <div
                                   className={classnames({ active: this.state.activeTab === tabName })}
                                   onClick={() => { toggle(tabName); }}
                               >
                                   <button className="tab-btn">{tabName}</button>
-                              </a>
+                              </div>
                           </NavItem>)
                         }
                     })}

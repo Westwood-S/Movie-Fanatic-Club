@@ -123,17 +123,25 @@ class NavBar extends React.Component {
         isSignedIn: !!user
       })
       if (user){
-        db
-          .collection("user").doc(auth.currentUser.email)
-          .set({
-            name: auth.currentUser.displayName,
-            email: auth.currentUser.email,
-            photo: auth.currentUser.photoURL,
-            uid: auth.currentUser.uid,
-            watchlist: []
-          })
-          .then(function(){
-            console.log('yay db')
+        const userRef = db.collection("user").doc(auth.currentUser.email)
+        userRef  
+          .get()
+          .then(function(doc) {
+            if (doc.exists) {
+              userRef.update({
+                  name: auth.currentUser.displayName,
+                  photo: auth.currentUser.photoURL,
+                  uid: auth.currentUser.uid,
+                })
+            } else {
+              userRef.set({
+                  name: auth.currentUser.displayName,
+                  email: auth.currentUser.email,
+                  photo: auth.currentUser.photoURL,
+                  uid: auth.currentUser.uid,
+                  watchlist: {}
+                })
+            }
           })
           .catch(function(error){
             console.log(error)

@@ -1,11 +1,12 @@
 // body component for loading stuff about an individual movie
 // when the user clicks on it
 
-import React from "react";
+import React, { useEffect } from "react";
 import "../index.css";
 import { Media, Container, Row, Button} from 'reactstrap';
 import { NavLink } from "react-router-dom";
 import { TiPlusOutline, TiMinusOutline } from "react-icons/ti";
+import { auth, db } from './Firebase';
 
 class Movie extends React.Component {
   constructor(props) {
@@ -13,8 +14,12 @@ class Movie extends React.Component {
     this.state = {
       movie: {},
       movies: {},
-      loading: true
+      loading: true,
+      isAdd: false
     };
+
+    this.setWatchList = this.setWatchList.bind(this)
+    this.checkExists = this.checkExists.bind(this)
   }
 
   componentDidMount(){
@@ -30,7 +35,6 @@ class Movie extends React.Component {
           this.setState({
             movie: data
           }) 
-          console.log(this.state.movie)
       })
     })
     .catch(err => {
@@ -43,18 +47,103 @@ class Movie extends React.Component {
           this.setState({
             movies: data
           })
-          console.log(this.state.movies)
       })
     })
     .catch(err => {
         console.log(err);
     }); 
   }
-  
-  // below I added a link back to the landing page, just to make our lives easier while testing
-  // we'll remove it when we actually build the events page, since users won't need to go back to
-  // the landing page
+
+  checkExists(id) {
+    if (this.state.isAdd === "false"){
+      console.log("isadd")
+      db.collection("user")
+        .doc(auth.currentUser.email)
+        .get()
+          .then(function(doc) {
+            var newWatchlist = doc.data().watchlist;
+            var index = newWatchlist.indexOf(id)
+            if(index > -1) {
+              this.setState({
+                isAdd: true
+              })
+            }
+
+          })
+          .catch(function(error){
+            console.log(error)
+          })
+        
+      this.setState({
+        isAdd: !this.state.isAdd
+      })
+    }
+  } 
+
+  setWatchList(id){
+    let userRef = db.collection("user").doc(auth.currentUser.email)
+    if (this.state.isAdd){
+      userRef
+        .get()
+          .then(function(doc) {
+            var newWatchlist = doc.data().watchlist;
+            var index = newWatchlist.indexOf(id)
+            if(index > -1) {
+              newWatchlist.splice(index,1)
+            }
+            userRef.update({
+              watchlist: newWatchlist
+            })
+          })
+          .catch(function(error){
+            console.log(error)
+          })
+        
+      this.setState({
+        isAdd: !this.state.isAdd
+      })
+    }
+    else {
+      userRef
+        .get()
+        .then(function(doc) {
+          var newWatchlist = doc.data().watchlist;
+          newWatchlist.push(id)
+          userRef.update({
+            watchlist: newWatchlist
+          })
+        })
+        .catch(function(error){
+          console.log(error)
+        })
+
+      this.setState({
+        isAdd: !this.state.isAdd
+      })
+    }
+  }
+
   render() {
+    if(this.state.isAdd === 'false' && this.state.movie.id) {
+      console.log("check")
+      db.collection("user")
+        .doc(auth.currentUser.email)
+        .get()
+          .then(function(doc) {
+            var newWatchlist = doc.data().watchlist;
+            var index = newWatchlist.indexOf(this.state.movie.id)
+            if(index > -1) {
+              this.setState({
+                isAdd: true
+              })
+            }
+
+          })
+          .catch(function(error){
+            console.log(error)
+          })
+    }
+
     return (
       <Container>
         {this.state.movie? 
@@ -64,16 +153,20 @@ class Movie extends React.Component {
           </Row>
           <Row>
             <div className="movie-poster">
+              {this.state.movie.poster?
               <a title="trailer is here!" className="movie-title" rel="noopener noreferrer" target="_blank" href={this.state.movie.trailer?this.state.movie.trailer.link:"/"}>
                 <img className="movie-actual-poster" alt={this.state.movie.title} src={this.state.movie.poster}/>
               </a>
+              :""}
+              
             </div>
           </Row>
           <Row><div className="movie-director">directed by: {this.state.movies.Director}</div></Row>
-          <Row><div  className="movie-info">{this.state.movies.Rated} | {this.state.movies.Runtime} | {this.state.movies.Released}</div></Row>
+          <Row><div className="movie-info">{this.state.movies.Rated} | {this.state.movies.Runtime} | {this.state.movies.Released}</div></Row>
           <Row><div  className="movie-info">{this.state.movies.Country} | {this.state.movies.Language}</div></Row>
           <Row><div  className="movie-info">IMDb rating: {this.state.movies.imdbRating} | Metascore: {this.state.movies.Metascore}</div></Row>
-          <Row><div  className="movie-director">{this.state.movies.Production?this.state.movies.Production:""}</div></Row>
+          {this.state.movies.Production?
+          <Row><div  className="movie-director">this.state.movies.Production</div></Row>:""}
           <Row><div  className="movie-info">AWARDS: {this.state.movies.Awards}</div></Row>
           <Row><div  className="movie-info">PLOT: {this.state.movies.Plot}</div></Row>
           {this.state.movie.cast?
@@ -85,10 +178,22 @@ class Movie extends React.Component {
             )
           })
           :""}
-          
-          <Row><div className="movie-btn"> <Button className="movie-rl-btn"><TiPlusOutline /> watchlist</Button></div></Row>
-          <Row><div className="movie-btn"> <Button className="movie-rl-btn"><TiMinusOutline /> watchlist</Button></div></Row>
-        </div>
+          <Row>
+            <div className="movie-btn"> 
+              <Button 
+                onClick={()=>{
+                  this.setWatchList(this.state.movie.id)
+                }} 
+                onMouseEnter={()=>{
+                  this.checkExists(this.state.movie.id)
+                }} 
+                className="movie-rl-btn">{this.state.isAdd?<TiMinusOutline />:<TiPlusOutline />} 
+                watchlist
+              </Button>
+         
+            </div>
+          </Row>
+       </div>
         : <Media>wait a sec bru</Media>}
       </Container>
     );
