@@ -213,10 +213,16 @@ img {
   .card-subtitles {
     font-size: 1.1rem;
   }
+  .intheater-btn {
+    font-size: 1.2rem;
+  }
 }
 
 @media screen and (max-width: 597px) {
   .card-titles {
+    display: none;
+  }
+  .intheater-btn {
     display: none;
   }
 }
@@ -258,6 +264,12 @@ img {
     font-size: 1.1rem;
   }
 }
+
+.intheater-btn{
+    background-color: white;
+    border: none;
+}
+
 
 /* Tabs */
 
@@ -593,7 +605,7 @@ img {
 
 @media screen and (max-width: 425px) {
   .watchlist-btn {
-    font-size: .8rem;
+    font-size: 1.3rem;
   }
 }
 

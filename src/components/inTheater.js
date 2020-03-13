@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, CardText, CardBody, CardTitle, CardSubtitle } from "reactstrap";
 import { FaImdb } from "react-icons/fa";
-import { TiMediaFastForward, TiPlusOutline, TiMinusOutline } from "react-icons/ti";
+import { TiMediaFastForward } from "react-icons/ti";
 import { FiPlusSquare, FiMinusSquare } from "react-icons/fi";
 import Icon from "react-fa";
 import rp from "request-promise";
@@ -184,7 +184,7 @@ class InTheater extends Component {
                     >
                       <img alt={item.title} src={item.poster} />
                     </a>
-                    <CardBody className="intheater-cardbody">
+                    <CardBody className="intheater-cardbody" title="stop on hover">
                       <CardTitle>
                         <NavLink
                           to={{
@@ -198,7 +198,7 @@ class InTheater extends Component {
                         </NavLink>
                         {this.state.isSignedIn?
                         <button 
-                          className="watchlist-btn" 
+                          className="intheater-btn" 
                           onClick={() => {
                             this.setWatchList(item.id, index)
                           }}
