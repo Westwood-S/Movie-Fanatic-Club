@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Sriracha&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Special+Elite&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Playfair+Display&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Bangers&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Sriracha&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Special+Elite&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Lobster&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Lobster&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Bangers&display=swap");
 
 body {
   margin: 0;
-  font-family: 'Sriracha', cursive;
+  font-family: "Sriracha", cursive;
 }
 
 a:hover {
@@ -22,6 +22,11 @@ a:hover {
 
 .nav-brand {
   font-size: 1.5em;
+  text-decoration: none;
+  color: black;
+}
+.nav-brand:hover {
+  color: black;
 }
 
 .nav-link {
@@ -33,10 +38,10 @@ a:hover {
 }
 
 .nav-fa {
-  padding:0 1.6rem 0 1.6rem!important;
+  padding: 0 1.6rem 0 1.6rem !important;
 }
 
-.btn-signin{
+.btn-signin {
   background-color: rgba(99, 91, 91, 0.5);
   border: none;
 }
@@ -50,7 +55,7 @@ a:hover {
 }
 
 .btn-search:hover {
-  color:rgb(161, 78, 150);
+  color: rgb(161, 78, 150);
   text-decoration: none;
   font-style: italic;
 }
@@ -73,7 +78,7 @@ a:hover {
 }
 
 .media-heading:hover {
-  color:rgb(161, 78, 150);
+  color: rgb(161, 78, 150);
   font-style: italic;
 }
 
@@ -82,30 +87,26 @@ a:hover {
   font-size: 3.4vw;
   margin: 4vw 0 3vw 0;
   text-align: center;
-  font-family: 'Lobster', cursive;
-  
+  font-family: "Lobster", cursive;
 }
 .section-title a {
   color: rgb(83, 81, 81);
 }
 
-
 .carousel-inners {
-  width:80%;
+  width: 80%;
   height: 1400px;
   margin: 0 auto 0 auto;
-  
 }
-.carousel-item{
+.carousel-item {
   transition: ease-in-out;
   font-size: 1.4vw;
-  font-family: 'Special Elite', cursive;
+  font-family: "Special Elite", cursive;
   font-weight: 0;
-  
 }
 
 img {
-  width:100%;
+  width: 100%;
   height: 100%;
 }
 
@@ -115,7 +116,7 @@ img {
 }
 
 .card-img {
-  width:400px;
+  width: 400px;
   height: 600px;
 }
 
@@ -125,35 +126,33 @@ img {
 }
 
 .card-title:hover {
-  color:rgb(161, 78, 150);
+  color: rgb(161, 78, 150);
   font-style: italic;
 }
 
 .card-text {
   font-size: 1.1vw;
-  padding-top: .7rem;
+  padding-top: 0.7rem;
   margin-bottom: 0;
 }
 
-
 /* Tabs */
-
 
 .tabs {
   width: 80%;
   margin: 2vw auto 20vw auto;
 }
 
-.tab-btn{
+.tab-btn {
   border-top: none;
-  border-left:  none;
+  border-left: none;
   border-right: none;
-  border-bottom:   solid 1px #dee2e6;
+  border-bottom: solid 1px #dee2e6;
   background-color: white;
 }
 
 .nav-items {
-  width:70px;
+  width: 70px;
   height: 100%;
   margin: 80px 23px 10px;
 }
@@ -163,7 +162,7 @@ img {
 }
 
 .media-pic {
-  width:200px;
+  width: 200px;
   height: 300px;
 }
 
@@ -174,7 +173,7 @@ img {
 }
 
 .watchlist-icon {
-  color:black;
+  color: black;
   background-color: white;
   border: none;
 }
@@ -188,7 +187,9 @@ img {
   padding: 60px;
 }
 
-.btn-explore, .btn-explore:visited, .btn-explore:focus{
+.btn-explore,
+.btn-explore:visited,
+.btn-explore:focus {
   width: 400px;
   height: 200px;
   border-radius: 50px;
@@ -199,7 +200,8 @@ img {
   background-color: white;
   background-position: center !important;
 }
-.btn-explore:hover, .btn-explore:active {
+.btn-explore:hover,
+.btn-explore:active {
   border-radius: 50px;
   border: 0;
   color: rgb(0, 0, 0);
@@ -209,67 +211,122 @@ img {
   background-position: center;
 }
 
-.Action{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,643,1000_AL_.jpg);
+.Action {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,
+    0,
+    643,
+    1000_al_.jpg
+  );
 }
 
-.Adventure{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,675,1000_AL_.jpg);
+.Adventure {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,
+    0,
+    675,
+    1000_al_.jpg
+  );
 }
 
-.Animation{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_SY1000_CR0,0,672,1000_AL_.jpg);
+.Animation {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_SY1000_CR0,
+    0,
+    672,
+    1000_al_.jpg
+  );
 }
 
-.Biography{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_SY1000_CR0,0,674,1000_AL_.jpg);
+.Biography {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_SY1000_CR0,
+    0,
+    674,
+    1000_al_.jpg
+  );
 }
 
-.Crime{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,686,1000_AL_.jpg);
+.Crime {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,
+    0,
+    686,
+    1000_al_.jpg
+  );
 }
 
-.Documentary{
+.Documentary {
   background-image: url(https://m.media-amazon.com/images/M/MV5BNGU2OGJkZTItYmRmNi00YTI2LWFkNzEtNjY2MGZiZTRhMzRkXkEyXkFqcGdeQXVyMjYwNDA2MDE@._V1_.jpg);
 }
 
-.Drama{
+.Drama {
   background-image: url(https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg);
 }
 
-.Film-Noir{
+.Film-Noir {
   background-image: url(https://m.media-amazon.com/images/M/MV5BYTc1NGViOTMtNjZhNS00OGY2LWI4MmItOWQwNTY4MDMzNWI3L2ltYWdlXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SY1000_SX654_AL_.jpg);
 }
 
-.History{
+.History {
   background-image: url(https://m.media-amazon.com/images/M/MV5BMjExMTEzODkyN15BMl5BanBnXkFtZTcwNTU4NTc4OQ@@._V1_.jpg);
 }
 
-.Horror{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BNTQwNDM1YzItNDAxZC00NWY2LTk0M2UtNDIwNWI5OGUyNWUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,672,1000_AL_.jpg);
+.Horror {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BNTQwNDM1YzItNDAxZC00NWY2LTk0M2UtNDIwNWI5OGUyNWUxXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,
+    0,
+    672,
+    1000_al_.jpg
+  );
 }
 
-.Music{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BOTA5NDZlZGUtMjAxOS00YTRkLTkwYmMtYWQ0NWEwZDZiNjEzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX675_CR0,0,675,999_AL_.jpg);
+.Music {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BOTA5NDZlZGUtMjAxOS00YTRkLTkwYmMtYWQ0NWEwZDZiNjEzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX675_CR0,
+    0,
+    675,
+    999_al_.jpg
+  );
 }
 
-.Musical{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BMTQ4NDI3NDg4M15BMl5BanBnXkFtZTcwMjY5OTI1OA@@._V1_SY1000_CR0,0,674,1000_AL_.jpg);
+.Musical {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BMTQ4NDI3NDg4M15BMl5BanBnXkFtZTcwMjY5OTI1OA@@._V1_SY1000_CR0,
+    0,
+    674,
+    1000_al_.jpg
+  );
 }
 
-.Mystery{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BZTcyNjk1MjgtOWI3Mi00YzQwLWI5MTktMzY4ZmI2NDAyNzYzXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,681,1000_AL_.jpg);
+.Mystery {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BZTcyNjk1MjgtOWI3Mi00YzQwLWI5MTktMzY4ZmI2NDAyNzYzXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,
+    0,
+    681,
+    1000_al_.jpg
+  );
 }
 
-.Romance{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BNDg4NjM1YjMtYmNhZC00MjM0LWFiZmYtNGY1YjA3MzZmODc5XkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SY1000_CR0,0,666,1000_AL_.jpg);
+.Romance {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BNDg4NjM1YjMtYmNhZC00MjM0LWFiZmYtNGY1YjA3MzZmODc5XkEyXkFqcGdeQXVyNDk3NzU2MTQ@._V1_SY1000_CR0,
+    0,
+    666,
+    1000_al_.jpg
+  );
 }
 
-.Sci-Fi{
-  background-image: url(https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,665,1000_AL_.jpg);
+.Sci-Fi {
+  background-image: url(
+    https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,
+    0,
+    665,
+    1000_al_.jpg
+  );
 }
 
-.War{
+.War {
   background: url(https://m.media-amazon.com/images/M/MV5BY2IzZGY2YmEtYzljNS00NTM5LTgwMzUtMzM1NjQ4NGI0OTk0XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_.jpg);
 }
 
@@ -280,14 +337,14 @@ img {
   font-size: 4vw;
   color: rgb(22, 3, 192);
   text-align: center;
-  font-family: 'Lobster', cursive;
+  font-family: "Lobster", cursive;
 }
 
 .movie-title:hover {
-  color:rgb(161, 78, 150);
+  color: rgb(161, 78, 150);
   font-style: italic;
   text-align: center;
-  font-family: 'Lobster', cursive;
+  font-family: "Lobster", cursive;
 }
 
 .movie-poster {
@@ -295,26 +352,26 @@ img {
   text-align: center;
 }
 
-.movie-actual-poster{
+.movie-actual-poster {
   width: 60%;
 }
 
-.movie-director{
+.movie-director {
   width: 100%;
   font-size: 2.3vw;
   padding: 3rem 0 2rem 0;
   text-align: center;
   color: rgb(22, 3, 192);
   font-style: italic;
-  font-family: 'Lobster', cursive;
+  font-family: "Lobster", cursive;
 }
 
-.movie-info{
+.movie-info {
   width: 100%;
   font-size: 1.2vw;
-  padding: .8rem 0 .8rem 0;
+  padding: 0.8rem 0 0.8rem 0;
   text-align: center;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
 }
 
 .movie-actor {
@@ -322,21 +379,20 @@ img {
   font-size: 2vw;
   padding: 2rem 0 0 0;
   text-align: center;
-  font-family: 'Lobster', cursive;
+  font-family: "Lobster", cursive;
 }
 
-.movie-actor-link{
+.movie-actor-link {
   color: rgb(22, 3, 192);
   text-align: center;
   font-size: 2.5vw;
 }
 
-.movie-actor-link:hover{
-  color:rgb(161, 78, 150);
+.movie-actor-link:hover {
+  color: rgb(161, 78, 150);
   font-style: italic;
   font-size: 2.5vw;
 }
-
 
 .movie-btn {
   width: 100%;
@@ -345,7 +401,7 @@ img {
   color: black;
 }
 
-.movie-rl-btn{
+.movie-rl-btn {
   background-color: white;
   color: black;
   font-size: 3vw;
@@ -359,7 +415,6 @@ img {
   color: black;
   margin: 30px 10px;
 }
-.nav-links:hover{
-  color:rgb(161, 78, 150);
+.nav-links:hover {
+  color: rgb(161, 78, 150);
 }
-
