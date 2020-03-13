@@ -84,7 +84,6 @@ class ComingSoon extends Component {
     return (
       <div>
         <h2 className="section-titles">Coming Sooooooon</h2>
-
         <div className="tabs">
           <Nav tabs>
             {this.state.dates.map(item => {

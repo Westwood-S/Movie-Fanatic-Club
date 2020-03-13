@@ -4,8 +4,7 @@ import React from "react";
 import "../index.css";
 import { NavLink } from "react-router-dom";
 import { auth, db } from "./Firebase";
-import firebase from "firebase";
-import { FiFileMinus, FiFilePlus } from "react-icons/fi";
+import { FiFolderMinus, FiFolderPlus } from "react-icons/fi";
 import {
   CardText,
   CardTitle,
@@ -23,26 +22,21 @@ class Watchlist extends React.Component {
       apis: [],
       dates: [],
       activeTab: "",
-      isAdd: true
+      removeButton: []
     };
     this.setAPIState = this.setAPIState.bind(this);
     this.setWatchList = this.setWatchList.bind(this);
-  }
-
-  removeFromWatchList(){
-    var watchlistRef = db.collection("user").doc(auth.currentUser.email);
-    watchlistRef.update({
-      watchlist: firebase.firestore.FieldValue.arrayRemove(this.state.movie.id)
-    });
   }
 
   setAPIState(APIs){
     this.setState({ apis: [...this.state.apis, APIs] });
   }
 
-  setWatchList(id) {
+  setWatchList(id, index) {
     let userRef = db.collection("user").doc(auth.currentUser.email)
-    if (this.state.isAdd) {
+    let removeButtonList = this.state.removeButton
+    if (removeButtonList.indexOf(index)===-1) {
+      removeButtonList.push(index)
       userRef
         .get()
         .then(function (doc) {
@@ -58,12 +52,12 @@ class Watchlist extends React.Component {
         .catch(function (error) {
           console.log(error)
         })
-
-      this.setState({
-        isAdd: !this.state.isAdd
-      })
     }
     else {
+      var addIndex = removeButtonList.indexOf(index)
+      if (addIndex > -1) {
+            removeButtonList.splice(addIndex, 1)
+      }
       userRef
         .get()
         .then(function (doc) {
@@ -77,10 +71,9 @@ class Watchlist extends React.Component {
           console.log(error)
         })
 
-      this.setState({
-        isAdd: !this.state.isAdd
-      })
+     
     }
+    this.setState({removeButton: removeButtonList})
   }
 
   async componentDidMount() {
@@ -119,13 +112,16 @@ class Watchlist extends React.Component {
   }
 
   render() {
+
+
     return (
       <div className="watchlist">
         <h2 className="section-title">Watchlist</h2>
 
         <div className="tabs">
           <Row>
-            {this.state.apis.map(data => {
+            {this.state.apis.map((data,index) => {
+              
               return (
                 <Col xl="6" key={data.Title} className>
                   <Media className="media-body">
@@ -142,14 +138,7 @@ class Watchlist extends React.Component {
                     </Media>
                     <Media body className="cards-body">
                       <CardTitle>
-                        <button 
-                          className="watchlist-btn" 
-                          onClick={() => {
-                            this.setWatchList(data.imdbID)
-                          }}
-                        >
-                          {this.state.isAdd?<FiFileMinus />:<FiFilePlus />}
-                        </button>
+                        
                         <NavLink
                           to={{
                             pathname: "./Movie",
@@ -161,6 +150,14 @@ class Watchlist extends React.Component {
                           {data.Title} 
                           
                         </NavLink>
+                        <button 
+                          className="watchlist-btn" 
+                          onClick={() => {
+                            this.setWatchList(data.imdbID, index)
+                          }}
+                        >
+                          {this.state.removeButton.indexOf(index)===-1?<FiFolderMinus />:<FiFolderPlus />}
+                        </button>
                       </CardTitle>
                       <CardSubtitle className="card-subtitles">
                         {data.Rated} | {data.Runtime} | {data.Genre} |{" "}

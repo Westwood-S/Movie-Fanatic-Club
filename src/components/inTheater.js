@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Card, CardText, CardBody, CardTitle, CardSubtitle } from "reactstrap";
 import { FaImdb } from "react-icons/fa";
-import { TiMediaFastForward } from "react-icons/ti";
+import { TiMediaFastForward, TiPlusOutline, TiMinusOutline } from "react-icons/ti";
+import { FiPlusSquare, FiMinusSquare } from "react-icons/fi";
 import Icon from "react-fa";
 import rp from "request-promise";
 import cheerio from "cheerio";
@@ -9,15 +10,19 @@ import Carousel from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import ComingSoon from "./comingSoon";
 import { NavLink } from "react-router-dom";
+import { auth } from "./Firebase";
 
 class InTheater extends Component {
   constructor() {
     super();
     this.state = {
       value: 0,
-      apis: []
+      apis: [],
+      isSignedIn: false,
+      removeButton: []
     };
     this.onChange = this.onChange.bind(this);
+    this.setWatchList = this.setWatchList.bind(this);
   }
 
   async componentDidMount() {
@@ -63,11 +68,22 @@ class InTheater extends Component {
       .catch(function(err) {
         console.log(err);
       });
+
+    auth.onAuthStateChanged(user => {
+      let currentState = this
+      if (user) {
+        currentState.setState({
+          isSignedIn:true
+        })
+      }
+    })
   }
 
   onChange(value) {
     this.setState({ value });
   }
+
+  setWatchList(){}
 
   render() {
     return (
@@ -93,7 +109,7 @@ class InTheater extends Component {
             {this.state.apis.length === 0 ? (
               <div>i&apos;m gettin there...</div>
             ) : (
-              this.state.apis.map(item => {
+              this.state.apis.map((item, index) => {
                 return (
                   <Card key={item.title} className="card">
                     <a
@@ -116,6 +132,16 @@ class InTheater extends Component {
                         >
                           {item.title}
                         </NavLink>
+                        {this.state.isSignedIn?
+                        <button 
+                          className="watchlist-btn" 
+                          onClick={() => {
+                            this.setWatchList(item.id, index)
+                          }}
+                        >
+                          {this.state.removeButton.indexOf(index)===-1?<FiPlusSquare />:<FiMinusSquare />}
+                        </button>
+                        :""}
                       </CardTitle>
                       <CardSubtitle>
                         <FaImdb />
