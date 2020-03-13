@@ -584,6 +584,19 @@ img {
   border: none;
 }
 
+/* watchlist */
+
+.watchlist-btn{
+  background-color: white;
+  border: none;
+}
+
+@media screen and (max-width: 425px) {
+  .watchlist-btn {
+    font-size: .8rem;
+  }
+}
+
 
 /* footer */
 

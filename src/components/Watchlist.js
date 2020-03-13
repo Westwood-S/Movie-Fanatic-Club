@@ -4,6 +4,8 @@ import React from "react";
 import "../index.css";
 import { NavLink } from "react-router-dom";
 import { auth, db } from "./Firebase";
+import firebase from "firebase";
+import { FiFileMinus, FiFilePlus } from "react-icons/fi";
 import {
   CardText,
   CardTitle,
@@ -20,44 +22,100 @@ class Watchlist extends React.Component {
       value: 0,
       apis: [],
       dates: [],
-      activeTab: ""
+      activeTab: "",
+      isAdd: true
     };
     this.setAPIState = this.setAPIState.bind(this);
+    this.setWatchList = this.setWatchList.bind(this);
   }
 
-  setAPIState = APIs => {
+  removeFromWatchList(){
+    var watchlistRef = db.collection("user").doc(auth.currentUser.email);
+    watchlistRef.update({
+      watchlist: firebase.firestore.FieldValue.arrayRemove(this.state.movie.id)
+    });
+  }
+
+  setAPIState(APIs){
     this.setState({ apis: [...this.state.apis, APIs] });
-  };
+  }
+
+  setWatchList(id) {
+    let userRef = db.collection("user").doc(auth.currentUser.email)
+    if (this.state.isAdd) {
+      userRef
+        .get()
+        .then(function (doc) {
+          var newWatchlist = doc.data().watchlist;
+          var index = newWatchlist.indexOf(id)
+          if (index > -1) {
+            newWatchlist.splice(index, 1)
+          }
+          userRef.update({
+            watchlist: newWatchlist
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+
+      this.setState({
+        isAdd: !this.state.isAdd
+      })
+    }
+    else {
+      userRef
+        .get()
+        .then(function (doc) {
+          var newWatchlist = doc.data().watchlist;
+          newWatchlist.push(id)
+          userRef.update({
+            watchlist: newWatchlist
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+
+      this.setState({
+        isAdd: !this.state.isAdd
+      })
+    }
+  }
 
   async componentDidMount() {
-    let currentComponent = this;
-    if (auth.currentUser != null) {
-      var docRef = db.collection("user").doc(auth.currentUser.email);
-
-      docRef
-        .get()
-        .then(function(doc) {
-          if (doc.exists) {
-            for (let i = 0; i < doc.data().watchlist.length; i++) {
-              let name = doc.data().watchlist[i];
-              const URL = "http://www.omdbapi.com/?apikey=1e54e73e&i=" + name;
-              fetch(URL)
-                .then(result => result.json())
-                .then(result => {
-                  currentComponent.setAPIState(result);
-                });
-            }
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-          }
-        })
-        .catch(function(error) {
-          console.log("Error getting document:", error);
-        });
-    } else {
-      console.log("currentUser is null");
-    }
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        let currentComponent = this;
+        var docRef = db.collection("user").doc(auth.currentUser.email);
+          docRef
+            .get()
+            .then(function(doc) {
+              if (doc.exists) {
+                for (let i = 0; i < doc.data().watchlist.length; i++) {
+                  let name = doc.data().watchlist[i];
+                  const URL = "https://www.omdbapi.com/?apikey=1e54e73e&i=" + name;
+                  fetch(URL)
+                    .then(result => result.json())
+                    .then(result => {
+                      currentComponent.setAPIState(result);
+                    });
+                }
+              } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+              }
+            })
+            .catch(function(error) {
+              console.log("Error getting document:", error);
+            });
+      }
+      else {
+        console.log ("cannot find user in watchlist")
+      }
+    })
+        
+    
   }
 
   render() {
@@ -68,9 +126,8 @@ class Watchlist extends React.Component {
         <div className="tabs">
           <Row>
             {this.state.apis.map(data => {
-              console.log("DATA INSIDE MAP IS: ", data);
               return (
-                <Col xl="6" key={data.Title}>
+                <Col xl="6" key={data.Title} className>
                   <Media className="media-body">
                     <Media left className="media-pic">
                       <a
@@ -85,6 +142,14 @@ class Watchlist extends React.Component {
                     </Media>
                     <Media body className="cards-body">
                       <CardTitle>
+                        <button 
+                          className="watchlist-btn" 
+                          onClick={() => {
+                            this.setWatchList(data.imdbID)
+                          }}
+                        >
+                          {this.state.isAdd?<FiFileMinus />:<FiFilePlus />}
+                        </button>
                         <NavLink
                           to={{
                             pathname: "./Movie",
@@ -93,7 +158,8 @@ class Watchlist extends React.Component {
                           className="card-title"
                           title="this is it"
                         >
-                          {data.Title}
+                          {data.Title} 
+                          
                         </NavLink>
                       </CardTitle>
                       <CardSubtitle className="card-subtitles">

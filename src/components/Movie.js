@@ -15,7 +15,9 @@ class Movie extends React.Component {
       movie: {},
       movies: {},
       loading: true,
-      isAdd: false
+      isAdd: false,
+      thisMovie: "",
+      isMounted: false
     };
 
     this.addToWatchlist = this.addToWatchlist.bind(this);
@@ -40,7 +42,9 @@ class Movie extends React.Component {
     alert("removing from watchlist");
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.setState({ isMounted: true })
+
     fetch(
       "https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/" +
       this.props.location.id,
@@ -56,7 +60,30 @@ class Movie extends React.Component {
       .then(response => {
         response.json().then(data => {
           this.setState({
-            movie: data
+            movie: data,
+            thisMovie: data.id
+          })
+
+          auth.onAuthStateChanged(user => {
+            let currentState = this, thisMovie = currentState.state.thisMovie
+            if (user && currentState.state.isMounted && thisMovie!== "") {
+              var docRef = db.collection("user").doc(auth.currentUser.email);
+                docRef
+                  .get()
+                  .then(function (doc) {
+                    var newWatchlist = doc.data().watchlist;
+                    var index = newWatchlist.indexOf(thisMovie)
+                    if (index > -1) {
+                      currentState.setState({
+                        isAdd: true
+                      })
+                    }
+          
+                  })
+                  .catch(function(error) {
+                    console.log("Error getting document:", error);
+                  });
+            }
           })
         })
       })
@@ -77,10 +104,11 @@ class Movie extends React.Component {
       .catch(err => {
         console.log(err);
       });
+
   }
 
 
-  checkExists(id) {
+  /* checkExists(id) {
     if (this.state.isAdd === "false") {
       console.log("isadd")
       db.collection("user")
@@ -104,7 +132,7 @@ class Movie extends React.Component {
         isAdd: !this.state.isAdd
       })
     }
-  }
+  } */
 
   setWatchList(id) {
     let userRef = db.collection("user").doc(auth.currentUser.email)
@@ -150,28 +178,9 @@ class Movie extends React.Component {
   }
 
   render() {
-    if (this.state.isAdd === 'false' && this.state.movie.id) {
-      console.log("check")
-      db.collection("user")
-        .doc(auth.currentUser.email)
-        .get()
-        .then(function (doc) {
-          var newWatchlist = doc.data().watchlist;
-          var index = newWatchlist.indexOf(this.state.movie.id)
-          if (index > -1) {
-            this.setState({
-              isAdd: true
-            })
-          }
-
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-    }
 
     return (
-      <Container>
+      <Container key="">
         {this.state.movie ?
           <div>
             <Row>
@@ -198,7 +207,7 @@ class Movie extends React.Component {
             {this.state.movie.cast ?
               this.state.movie.cast.map(item => {
                 return (
-                  <Row key=""><div className="movie-actor">
+                  <Row key="yay"><div className="movie-actor">
                     <a title="visit fav actor" className="movie-actor-link" rel="noopener noreferrer" target="_blank" href={'https://www.imdb.com/name/' + item.actor_id}>{item.actor}</a> as {item.character}
                   </div></Row>
                 )
@@ -209,9 +218,6 @@ class Movie extends React.Component {
                 <Button
                   onClick={() => {
                     this.setWatchList(this.state.movie.id)
-                  }}
-                  onMouseEnter={() => {
-                    this.checkExists(this.state.movie.id)
                   }}
                   className="movie-rl-btn">{this.state.isAdd ? <TiMinusOutline /> : <TiPlusOutline />}
                 watchlist

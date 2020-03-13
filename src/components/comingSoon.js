@@ -102,7 +102,6 @@ class ComingSoon extends Component {
                       onClick={() => {
                         toggle(tabName);
                       }}
-                      href="/"
                     >
                       <button className="tab-btn">{tabName}</button>
                     </a>
