@@ -4,32 +4,14 @@ import React from "react";
 import "../index.css";
 import { NavLink } from "react-router-dom";
 import { auth, db } from "./Firebase";
-import firebase, { DocumentReference, DocumentSnapshot } from "firebase";
-
 import {
-  Card,
   CardText,
-  CardBody,
   CardTitle,
   CardSubtitle,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
   Row,
   Col,
-  Media,
-  Button
+  Media
 } from "reactstrap";
-import { FaImdb } from "react-icons/fa";
-import { TiMediaFastForward, TiEqualsOutline } from "react-icons/ti";
-import Icon from "react-fa";
-import rp from "request-promise";
-import cheerio from "cheerio";
-import Carousel from "@brainhubeu/react-carousel";
-import "@brainhubeu/react-carousel/lib/style.css";
-import ComingSoon from "./comingSoon";
-import classnames from "classnames";
 
 class Watchlist extends React.Component {
   constructor(props) {
@@ -80,7 +62,7 @@ class Watchlist extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="watchlist">
         <h2 className="section-title">Watchlist</h2>
 
         <div className="tabs">
@@ -88,12 +70,12 @@ class Watchlist extends React.Component {
             {this.state.apis.map(data => {
               console.log("DATA INSIDE MAP IS: ", data);
               return (
-                <Col sm="6" key={data.Title}>
+                <Col xl="6" key={data.Title}>
                   <Media className="media-body">
                     <Media left className="media-pic">
                       <a
                         href={"https://www.imdb.com/title/" + data.imdbID}
-                        title="link"
+                        title="imdb express"
                         rel="noopener noreferrer"
                         target="_blank"
                         className="media-pic"
@@ -109,17 +91,18 @@ class Watchlist extends React.Component {
                             id: data.imdbID
                           }}
                           className="card-title"
+                          title="this is it"
                         >
                           {data.Title}
                         </NavLink>
                       </CardTitle>
-                      <CardSubtitle>
+                      <CardSubtitle className="card-subtitles">
                         {data.Rated} | {data.Runtime} | {data.Genre} |{" "}
                         {data.Released}
                       </CardSubtitle>
-                      <CardText>Director: {data.Director}</CardText>
-                      <CardText>Actors: {data.Actors}</CardText>
-                      <CardText>Plot: {data.Plot}</CardText>
+                      <CardText className="watchlist-info">Director: {data.Director}</CardText>
+                      <CardText className="watchlist-info">Actors: {data.Actors}</CardText>
+                      <CardText className="watchlist-plot">Plot: {data.Plot}</CardText>
                     </Media>
                   </Media>
                 </Col>

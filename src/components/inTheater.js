@@ -104,14 +104,15 @@ class InTheater extends Component {
                     >
                       <img alt={item.title} src={item.poster} />
                     </a>
-                    <CardBody>
+                    <CardBody className="intheater-cardbody">
                       <CardTitle>
                         <NavLink
                           to={{
                             pathname: "./Movie",
                             id: item.id
                           }}
-                          className="card-title"
+                          className="card-titles"
+                          title="more info babe"
                         >
                           {item.title}
                         </NavLink>
@@ -124,8 +125,8 @@ class InTheater extends Component {
                         <TiMediaFastForward />
                         {item.length}
                       </CardSubtitle>
-                      {/*<CardSubtitle>Director: </CardSubtitle>*/}
-                      <CardText>Plot: {item.plot}</CardText>
+                      {/*<CardSubtitle>Director: </CardSuabtitle>*/}
+                      <CardText className="intheater-cardtext">Plot: {item.plot}</CardText>
                     </CardBody>
                   </Card>
                 );

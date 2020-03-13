@@ -9,8 +9,7 @@ import {
   NavItem,
   Row,
   Col,
-  Media,
-  Button
+  Media
 } from "reactstrap";
 import classnames from 'classnames';
 import rp from "request-promise";
@@ -84,7 +83,7 @@ class ComingSoon extends Component {
 
     return (
       <div>
-        <h2 className="section-title">Coming Sooooooon</h2>
+        <h2 className="section-titles">Coming Sooooooon</h2>
 
         <div className="tabs">
           <Nav tabs>
@@ -103,6 +102,7 @@ class ComingSoon extends Component {
                       onClick={() => {
                         toggle(tabName);
                       }}
+                      href="/"
                     >
                       <button className="tab-btn">{tabName}</button>
                     </a>
@@ -120,14 +120,14 @@ class ComingSoon extends Component {
                       .filter(data => data.Released.slice(3, 11) === item)
                       .map(data => {
                         return (
-                          <Col sm="6" key={data.Title}>
+                          <Col xl="6" key={data.Title}>
                             <Media className="media-body">
                               <Media left className="media-pic">
                                 <a
                                   href={
                                     "https://www.imdb.com/title/" + data.imdbID
                                   }
-                                  title="link"
+                                  title="none clickbait"
                                   rel="noopener noreferrer"
                                   target="_blank"
                                   className="media-pic"
@@ -143,17 +143,18 @@ class ComingSoon extends Component {
                                       id: data.imdbID
                                     }}
                                     className="card-title"
+                                    title="more info"
                                   >
                                     {data.Title}
                                   </NavLink>
                                 </CardTitle>
-                                <CardSubtitle>
+                                <CardSubtitle className="card-subtitles">
                                   {data.Rated} | {data.Runtime} | {data.Genre} |{" "}
                                   {data.Released}
                                 </CardSubtitle>
-                                <CardText>Director: {data.Director}</CardText>
-                                <CardText>Actors: {data.Actors}</CardText>
-                                <CardText>Plot: {data.Plot}</CardText>
+                                <CardText className="comingsoon-Card">Director: {data.Director}</CardText>
+                                <CardText className="comingsoon-Card">Actors: {data.Actors}</CardText>
+                                <CardText className="comingsoon-Plot">Plot: {data.Plot}</CardText>
                               </Media>
                             </Media>
                           </Col>

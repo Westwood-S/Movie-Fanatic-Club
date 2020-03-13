@@ -7,7 +7,6 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
   Popover,
@@ -17,7 +16,7 @@ import {
   Media
 } from "reactstrap";
 import "../index.css";
-import { Redirect, NavLink, Link } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { auth, db } from "./Firebase";
 import firebase from "firebase";
@@ -56,9 +55,7 @@ class NavBar extends React.Component {
         firebase.auth.GithubAuthProvider.PROVIDER_ID
       ]
     };
-
-    this.handleLoginRedirect = this.handleLoginRedirect.bind(this);
-
+    
     this.toggle = this.toggle.bind(this);
     this.toggleSignIn = this.toggleSignIn.bind(this);
     this.toggleSearch = this.toggleSearch.bind(this);
@@ -66,13 +63,6 @@ class NavBar extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.search = this.search.bind(this);
-  }
-
-  handleLoginRedirect(event) {
-    // set state "toEvents" to true
-    this.setState(() => ({
-      toLogin: true
-    }));
   }
 
   // navbar toggle for small screen
@@ -138,10 +128,10 @@ class NavBar extends React.Component {
         // return firebase.auth().signInWithEmailAndPassword(email, password);
         console.log("auth persistence set to LOCAL");
       })
-      .catch(function (error) {
+      .catch(function () {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        //var errorCode = error.code;
+        //var errorMessage = error.message;
       });
     auth.onAuthStateChanged(user => {
       this.setState({
@@ -325,7 +315,6 @@ class NavBar extends React.Component {
                         to="/"
                         className="nav-link nav-fa"
                         onMouseEnter={() => {
-                          this.handleLoginRedirect();
                           this.hoverme(3);
                         }}
                         onMouseOut={() => {
@@ -367,7 +356,7 @@ class NavBar extends React.Component {
                     </NavItem>
                   )}
                 <NavItem>
-                  <NavLink
+                  <div
                     to="/"
                     className="nav-link nav-fa"
                     onMouseEnter={() => {
@@ -390,7 +379,7 @@ class NavBar extends React.Component {
                         <MdLocationSearching className="nav-icon" />
                       )}
                     {this.state.isOpen ? "   search" : ""}
-                  </NavLink>
+                  </div>
                   <Modal
                     isOpen={this.state.isToggleSearchOpen}
                     toggle={this.toggleSearch}

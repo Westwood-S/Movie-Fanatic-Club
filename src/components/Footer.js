@@ -7,6 +7,7 @@ import {
   NavItem
 } from "reactstrap";
 import "../index.css";
+import { GiFilmSpool } from "react-icons/gi";
 
 class Footer extends React.Component {
   constructor(props) {
@@ -21,15 +22,18 @@ class Footer extends React.Component {
             <div className="container">
               <Nav className="mr-auto" navbar>
                 <NavItem >
-                  <NavLink className="nav-links" to="/">Home</NavLink>
+                  <NavLink title="I stan Hitchcock!" className="nav-links" to="/">Home</NavLink>
+                </NavItem>
+                {/* <NavItem>
+                  <NavLink className="nav-links" to="/Watchlist">Watchlist</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-links" to="./Aboutus.js">About us</NavLink>
-                </NavItem>
+                  <NavLink className="nav-links" to="/Explore">Explore</NavLink>
+                </NavItem> */}
               </Nav>
-              <p style={{ margin: 0 }}>
+              <p style={{ margin: 0 }} title="Frankly, my dear, I don't give a damn.">
                 © {new Date().getFullYear()}{" "}
-                Mo &amp; Li&apos;s.
+                <GiFilmSpool /> Movie Fanatic Club
               </p>
             </div>
           </Navbar>

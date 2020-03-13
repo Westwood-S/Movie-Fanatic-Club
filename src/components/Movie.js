@@ -1,10 +1,9 @@
 // body component for loading stuff about an individual movie
 // when the user clicks on it
 
-import React, { useEffect } from "react";
+import React from "react";
 import "../index.css";
 import { Media, Container, Row, Button } from "reactstrap";
-import { NavLink } from "react-router-dom";
 import { TiPlusOutline, TiMinusOutline } from "react-icons/ti";
 import { auth, db } from "./Firebase";
 import firebase from "firebase";
@@ -200,7 +199,7 @@ class Movie extends React.Component {
               this.state.movie.cast.map(item => {
                 return (
                   <Row key=""><div className="movie-actor">
-                    <a className="movie-actor-link" rel="noopener noreferrer" target="_blank" href={'https://www.imdb.com/name/' + item.actor_id}>{item.actor}</a> as {item.character}
+                    <a title="visit fav actor" className="movie-actor-link" rel="noopener noreferrer" target="_blank" href={'https://www.imdb.com/name/' + item.actor_id}>{item.actor}</a> as {item.character}
                   </div></Row>
                 )
               })
