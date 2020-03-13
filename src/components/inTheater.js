@@ -10,7 +10,7 @@ import Carousel from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import ComingSoon from "./comingSoon";
 import { NavLink } from "react-router-dom";
-import { auth } from "./Firebase";
+import { auth, db } from "./Firebase";
 
 class InTheater extends Component {
   constructor() {
@@ -83,7 +83,49 @@ class InTheater extends Component {
     this.setState({ value });
   }
 
-  setWatchList(){}
+  setWatchList(id, index){
+    let userRef = db.collection("user").doc(auth.currentUser.email)
+    let removeButtonList = this.state.removeButton
+    if (removeButtonList.indexOf(index) > -1) {
+      var addIndex = removeButtonList.indexOf(index)
+      if (addIndex > -1) {
+            removeButtonList.splice(addIndex, 1)
+      }
+      userRef
+        .get()
+        .then(function (doc) {
+          var newWatchlist = doc.data().watchlist;
+          var index = newWatchlist.indexOf(id)
+          if (index > -1) {
+            newWatchlist.splice(index, 1)
+          }
+          userRef.update({
+            watchlist: newWatchlist
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+    else {
+      removeButtonList.push(index)
+      userRef
+        .get()
+        .then(function (doc) {
+          var newWatchlist = doc.data().watchlist;
+          newWatchlist.push(id)
+          userRef.update({
+            watchlist: newWatchlist
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+
+     
+    }
+    this.setState({removeButton: removeButtonList})
+  }
 
   render() {
     return (
@@ -110,6 +152,28 @@ class InTheater extends Component {
               <div>i&apos;m gettin there...</div>
             ) : (
               this.state.apis.map((item, index) => {
+                if (this.state.isSignedIn){
+                  var currentButtonList = this.state.removeButton
+                  var currentState = this
+                  db.collection("user").doc(auth.currentUser.email)
+                        .get()
+                        .then(function (doc) {
+                          var newWatchlist = doc.data().watchlist;
+                          var addIndex = newWatchlist.indexOf(item.id)
+                          if (addIndex > -1) {
+                            currentButtonList.push(index)
+                            currentState.setState({
+                              removeButton: currentButtonList
+                            })
+                          }
+                
+                        })
+                        .catch(function(error) {
+                          console.log("Error getting document:", error);
+                        });
+                  }
+                
+
                 return (
                   <Card key={item.title} className="card">
                     <a

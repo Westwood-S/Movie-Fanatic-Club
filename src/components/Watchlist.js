@@ -112,8 +112,6 @@ class Watchlist extends React.Component {
   }
 
   render() {
-
-
     return (
       <div className="watchlist">
         <h2 className="section-title">Watchlist</h2>
