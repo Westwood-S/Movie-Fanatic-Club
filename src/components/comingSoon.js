@@ -12,7 +12,7 @@ import {
   Media,
   Button
 } from "reactstrap";
-import classnames from "classnames";
+import classnames from 'classnames';
 import rp from "request-promise";
 import cheerio from "cheerio";
 import { NavLink } from "react-router-dom";
@@ -39,7 +39,7 @@ class ComingSoon extends Component {
           apis = [];
         let $ = cheerio.load(html);
 
-        $("#main h4").each(function() {
+        $("#main h4").each(function () {
           let date = $(this)
             .prepend()
             .text();
@@ -50,7 +50,7 @@ class ComingSoon extends Component {
           dates: dates
         });
 
-        $("#main ul li a").each(function() {
+        $("#main ul li a").each(function () {
           let name = $(this).attr("href");
           let link = name.match(/(?<=title\/).*?(?=\/)/gs);
 
@@ -68,12 +68,12 @@ class ComingSoon extends Component {
           apis: apis
         });
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
       });
   }
 
-  handleWatchlist() {}
+  handleWatchlist() { }
 
   render() {
     const toggle = tab => {

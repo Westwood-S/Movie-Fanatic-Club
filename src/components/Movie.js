@@ -1,7 +1,7 @@
 // body component for loading stuff about an individual movie
 // when the user clicks on it
 
-import React from "react";
+import React, { useEffect } from "react";
 import "../index.css";
 import { Media, Container, Row, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
@@ -15,7 +15,8 @@ class Movie extends React.Component {
     this.state = {
       movie: {},
       movies: {},
-      loading: true
+      loading: true,
+      isAdd: false
     };
 
     this.addToWatchlist = this.addToWatchlist.bind(this);
@@ -28,6 +29,8 @@ class Movie extends React.Component {
       watchlist: firebase.firestore.FieldValue.arrayUnion(this.state.movie.id)
     });
     alert("adding to watchlist");
+    this.setWatchList = this.setWatchList.bind(this)
+    this.checkExists = this.checkExists.bind(this)
   }
 
   removeFromWatchlist() {
@@ -41,7 +44,7 @@ class Movie extends React.Component {
   componentDidMount() {
     fetch(
       "https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/" +
-        this.props.location.id,
+      this.props.location.id,
       {
         method: "GET",
         headers: {
@@ -55,9 +58,8 @@ class Movie extends React.Component {
         response.json().then(data => {
           this.setState({
             movie: data
-          });
-          console.log(this.state.movie);
-        });
+          })
+        })
       })
       .catch(err => {
         console.log(err);
@@ -70,141 +72,156 @@ class Movie extends React.Component {
         response.json().then(data => {
           this.setState({
             movies: data
-          });
-          console.log(this.state.movies);
-        });
+          })
+        })
       })
       .catch(err => {
         console.log(err);
       });
   }
 
-  // below I added a link back to the landing page, just to make our lives easier while testing
-  // we'll remove it when we actually build the events page, since users won't need to go back to
-  // the landing page
+
+  checkExists(id) {
+    if (this.state.isAdd === "false") {
+      console.log("isadd")
+      db.collection("user")
+        .doc(auth.currentUser.email)
+        .get()
+        .then(function (doc) {
+          var newWatchlist = doc.data().watchlist;
+          var index = newWatchlist.indexOf(id)
+          if (index > -1) {
+            this.setState({
+              isAdd: true
+            })
+          }
+
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+
+      this.setState({
+        isAdd: !this.state.isAdd
+      })
+    }
+  }
+
+  setWatchList(id) {
+    let userRef = db.collection("user").doc(auth.currentUser.email)
+    if (this.state.isAdd) {
+      userRef
+        .get()
+        .then(function (doc) {
+          var newWatchlist = doc.data().watchlist;
+          var index = newWatchlist.indexOf(id)
+          if (index > -1) {
+            newWatchlist.splice(index, 1)
+          }
+          userRef.update({
+            watchlist: newWatchlist
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+
+      this.setState({
+        isAdd: !this.state.isAdd
+      })
+    }
+    else {
+      userRef
+        .get()
+        .then(function (doc) {
+          var newWatchlist = doc.data().watchlist;
+          newWatchlist.push(id)
+          userRef.update({
+            watchlist: newWatchlist
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+
+      this.setState({
+        isAdd: !this.state.isAdd
+      })
+    }
+  }
+
   render() {
+    if (this.state.isAdd === 'false' && this.state.movie.id) {
+      console.log("check")
+      db.collection("user")
+        .doc(auth.currentUser.email)
+        .get()
+        .then(function (doc) {
+          var newWatchlist = doc.data().watchlist;
+          var index = newWatchlist.indexOf(this.state.movie.id)
+          if (index > -1) {
+            this.setState({
+              isAdd: true
+            })
+          }
+
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+
     return (
       <Container>
-        {this.state.movie ? (
+        {this.state.movie ?
           <div>
             <Row>
-              <a
-                title="if u stan imdb..."
-                className="movie-title"
-                rel="noopener noreferrer"
-                target="_blank"
-                href={"https://www.imdb.com/title/" + this.state.movie.id}
-              >
-                {this.state.movie.title} ({this.state.movie.year})
-              </a>
+              <a title="if u stan imdb..." className="movie-title" rel="noopener noreferrer" target="_blank" href={"https://www.imdb.com/title/" + this.state.movie.id}>{this.state.movie.title} ({this.state.movie.year})</a>
             </Row>
             <Row>
               <div className="movie-poster">
-                <a
-                  title="trailer is here!"
-                  className="movie-title"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  href={
-                    this.state.movie.trailer
-                      ? this.state.movie.trailer.link
-                      : "/"
-                  }
-                >
-                  <img
-                    className="movie-actual-poster"
-                    alt={this.state.movie.title}
-                    src={this.state.movie.poster}
-                  />
-                </a>
-              </div>
-            </Row>
-            <Row>
-              <div className="movie-director">
-                directed by: {this.state.movies.Director}
-              </div>
-            </Row>
-            <Row>
-              <div className="movie-info">
-                {this.state.movies.Rated} | {this.state.movies.Runtime} |{" "}
-                {this.state.movies.Released}
-              </div>
-            </Row>
-            <Row>
-              <div className="movie-info">
-                {this.state.movies.Country} | {this.state.movies.Language}
-              </div>
-            </Row>
-            <Row>
-              <div className="movie-info">
-                IMDb rating: {this.state.movies.imdbRating} | Metascore:{" "}
-                {this.state.movies.Metascore}
-              </div>
-            </Row>
-            <Row>
-              <div className="movie-director">
-                {this.state.movies.Production
-                  ? this.state.movies.Production
+                {this.state.movie.poster ?
+                  <a title="trailer is here!" className="movie-title" rel="noopener noreferrer" target="_blank" href={this.state.movie.trailer ? this.state.movie.trailer.link : "/"}>
+                    <img className="movie-actual-poster" alt={this.state.movie.title} src={this.state.movie.poster} />
+                  </a>
                   : ""}
-              </div>
-            </Row>
-            <Row>
-              <div className="movie-info">
-                AWARDS: {this.state.movies.Awards}
-              </div>
-            </Row>
-            <Row>
-              <div className="movie-info">PLOT: {this.state.movies.Plot}</div>
-            </Row>
-            {this.state.movie.cast
-              ? this.state.movie.cast.map(item => {
-                  return (
-                    <Row key="">
-                      <div className="movie-actor">
-                        <a
-                          className="movie-actor-link"
-                          rel="noopener noreferrer"
-                          target="_blank"
-                          href={"https://www.imdb.com/name/" + item.actor_id}
-                        >
-                          {item.actor}
-                        </a>{" "}
-                        as {item.character}
-                      </div>
-                    </Row>
-                  );
-                })
-              : ""}
 
-            <Row>
-              <div className="movie-btn">
-                <Button
-                  className="movie-rl-btn"
-                  onClick={() => {
-                    this.addToWatchlist();
-                  }}
-                >
-                  <TiPlusOutline /> watchlist
-                </Button>
               </div>
             </Row>
+            <Row><div className="movie-director">directed by: {this.state.movies.Director}</div></Row>
+            <Row><div className="movie-info">{this.state.movies.Rated} | {this.state.movies.Runtime} | {this.state.movies.Released}</div></Row>
+            <Row><div className="movie-info">{this.state.movies.Country} | {this.state.movies.Language}</div></Row>
+            <Row><div className="movie-info">IMDb rating: {this.state.movies.imdbRating} | Metascore: {this.state.movies.Metascore}</div></Row>
+            {this.state.movies.Production ?
+              <Row><div className="movie-director">this.state.movies.Production</div></Row> : ""}
+            <Row><div className="movie-info">AWARDS: {this.state.movies.Awards}</div></Row>
+            <Row><div className="movie-info">PLOT: {this.state.movies.Plot}</div></Row>
+            {this.state.movie.cast ?
+              this.state.movie.cast.map(item => {
+                return (
+                  <Row key=""><div className="movie-actor">
+                    <a className="movie-actor-link" rel="noopener noreferrer" target="_blank" href={'https://www.imdb.com/name/' + item.actor_id}>{item.actor}</a> as {item.character}
+                  </div></Row>
+                )
+              })
+              : ""}
             <Row>
               <div className="movie-btn">
-                {" "}
                 <Button
-                  className="movie-rl-btn"
                   onClick={() => {
-                    this.removeFromWatchlist();
+                    this.setWatchList(this.state.movie.id)
                   }}
-                >
-                  <TiMinusOutline /> watchlist
-                </Button>
+                  onMouseEnter={() => {
+                    this.checkExists(this.state.movie.id)
+                  }}
+                  className="movie-rl-btn">{this.state.isAdd ? <TiMinusOutline /> : <TiPlusOutline />}
+                watchlist
+              </Button>
+
               </div>
             </Row>
           </div>
-        ) : (
-          <Media>wait a sec bru</Media>
-        )}
+          : <Media>wait a sec bru</Media>}
       </Container>
     );
   }

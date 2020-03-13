@@ -129,7 +129,7 @@ class NavBar extends React.Component {
     firebase
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(function() {
+      .then(function () {
         // Existing and future Auth states are now persisted in the current
         // session only. Closing the window would clear any existing state even
         // if a user forgets to sign out.
@@ -138,7 +138,7 @@ class NavBar extends React.Component {
         // return firebase.auth().signInWithEmailAndPassword(email, password);
         console.log("auth persistence set to LOCAL");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -146,21 +146,29 @@ class NavBar extends React.Component {
     auth.onAuthStateChanged(user => {
       this.setState({
         isSignedIn: !!user
-      });
+      })
       if (user) {
-        db.collection("user")
-          .doc(auth.currentUser.email)
-          .set({
-            name: auth.currentUser.displayName,
-            email: auth.currentUser.email,
-            photo: auth.currentUser.photoURL,
-            uid: auth.currentUser.uid,
-            watchlist: []
+        const userRef = db.collection("user").doc(auth.currentUser.email)
+        userRef
+          .get()
+          .then(function (doc) {
+            if (doc.exists) {
+              userRef.update({
+                name: auth.currentUser.displayName,
+                photo: auth.currentUser.photoURL,
+                uid: auth.currentUser.uid,
+              })
+            } else {
+              userRef.set({
+                name: auth.currentUser.displayName,
+                email: auth.currentUser.email,
+                photo: auth.currentUser.photoURL,
+                uid: auth.currentUser.uid,
+                watchlist: {}
+              })
+            }
           })
-          .then(function() {
-            console.log("yay db");
-          })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       }
@@ -230,8 +238,8 @@ class NavBar extends React.Component {
                     </NavLink>
                   </NavItem>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
                 {this.state.isSignedIn ? (
                   <NavItem>
                     <NavLink
@@ -248,17 +256,17 @@ class NavBar extends React.Component {
                         this.state.isOpen ? (
                           <MdMovieFilter className="nav-icon" />
                         ) : (
-                          "watchlist"
-                        )
+                            "watchlist"
+                          )
                       ) : (
-                        <MdMovieFilter className="nav-icon" />
-                      )}
+                          <MdMovieFilter className="nav-icon" />
+                        )}
                       {this.state.isOpen ? "   watchlist" : ""}
                     </NavLink>
                   </NavItem>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
                 {this.state.isSignedIn ? (
                   <NavItem>
                     <NavLink
@@ -275,17 +283,17 @@ class NavBar extends React.Component {
                         this.state.isOpen ? (
                           <FaRegNewspaper className="nav-icon" />
                         ) : (
-                          "notification"
-                        )
+                            "notification"
+                          )
                       ) : (
-                        <FaRegNewspaper className="nav-icon" />
-                      )}
+                          <FaRegNewspaper className="nav-icon" />
+                        )}
                       {this.state.isOpen ? "   notification" : ""}
                     </NavLink>
                   </NavItem>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
                 <NavItem>
                   <NavLink
                     to="./Explore"
@@ -301,63 +309,63 @@ class NavBar extends React.Component {
                       this.state.isOpen ? (
                         <FiGrid className="nav-icon" />
                       ) : (
-                        "explore"
-                      )
+                          "explore"
+                        )
                     ) : (
-                      <FiGrid className="nav-icon" />
-                    )}
+                        <FiGrid className="nav-icon" />
+                      )}
                     {this.state.isOpen ? "    explore" : ""}
                   </NavLink>
                 </NavItem>
                 {this.state.isSignedIn ? (
                   ""
                 ) : (
-                  <NavItem>
-                    <NavLink
-                      to="/"
-                      className="nav-link nav-fa"
-                      onMouseEnter={() => {
-                        this.handleLoginRedirect();
-                        this.hoverme(3);
-                      }}
-                      onMouseOut={() => {
-                        this.hoverme(3);
-                      }}
-                      onClick={() => {
-                        this.toggleSignIn();
-                        this.handleClick();
-                      }}
-                      id="Popover1"
-                      type="button"
-                      ref={node => {
-                        this.node = node;
-                      }}
-                    >
-                      {this.state.isHover3 ? (
-                        this.state.isOpen ? (
-                          <FaUserSecret className="nav-icon" />
+                    <NavItem>
+                      <NavLink
+                        to="/"
+                        className="nav-link nav-fa"
+                        onMouseEnter={() => {
+                          this.handleLoginRedirect();
+                          this.hoverme(3);
+                        }}
+                        onMouseOut={() => {
+                          this.hoverme(3);
+                        }}
+                        onClick={() => {
+                          this.toggleSignIn();
+                          this.handleClick();
+                        }}
+                        id="Popover1"
+                        type="button"
+                        ref={node => {
+                          this.node = node;
+                        }}
+                      >
+                        {this.state.isHover3 ? (
+                          this.state.isOpen ? (
+                            <FaUserSecret className="nav-icon" />
+                          ) : (
+                              "login"
+                            )
                         ) : (
-                          "login"
-                        )
-                      ) : (
-                        <FaUserSecret className="nav-icon" />
-                      )}
-                      {this.state.isOpen ? "   login" : ""}
-                    </NavLink>
-                    <Popover
-                      placement="bottom"
-                      isOpen={this.state.isToggleSignInOpen}
-                      target="Popover1"
-                      toggle={this.toggleSignIn}
-                    >
-                      <StyledFirebaseAuth
-                        show={this.state.isToggleSignInOpen}
-                        uiConfig={this.uiConfig}
-                        firebaseAuth={auth}
-                      />
-                    </Popover>
-                  </NavItem>
-                )}
+                            <FaUserSecret className="nav-icon" />
+                          )}
+                        {this.state.isOpen ? "   login" : ""}
+                      </NavLink>
+                      <Popover
+                        placement="bottom"
+                        isOpen={this.state.isToggleSignInOpen}
+                        target="Popover1"
+                        toggle={this.toggleSignIn}
+                      >
+                        <StyledFirebaseAuth
+                          show={this.state.isToggleSignInOpen}
+                          uiConfig={this.uiConfig}
+                          firebaseAuth={auth}
+                        />
+                      </Popover>
+                    </NavItem>
+                  )}
                 <NavItem>
                   <NavLink
                     to="/"
@@ -376,11 +384,11 @@ class NavBar extends React.Component {
                       this.state.isOpen ? (
                         <MdLocationSearching className="nav-icon" />
                       ) : (
-                        "search"
-                      )
+                          "search"
+                        )
                     ) : (
-                      <MdLocationSearching className="nav-icon" />
-                    )}
+                        <MdLocationSearching className="nav-icon" />
+                      )}
                     {this.state.isOpen ? "   search" : ""}
                   </NavLink>
                   <Modal
@@ -399,27 +407,27 @@ class NavBar extends React.Component {
                     </ModalBody>
                     {this.state.movies
                       ? this.state.movies.map((movie, index) => (
-                          <NavLink
-                            key={movie.Title}
-                            to={{
-                              pathname: "./Movie",
-                              id: movie.imdbID
-                            }}
-                          >
-                            <ModalBody>
-                              <Media>
-                                <Media left className="search-pic">
-                                  <img alt={movie.Title} src={movie.Poster} />
-                                </Media>
-                                <Media body className="media-title">
-                                  <Media heading className="media-heading">
-                                    {index + 1}. {movie.Title} ({movie.Year})
-                                  </Media>
-                                </Media>
+                        <NavLink
+                          key={movie.Title}
+                          to={{
+                            pathname: "./Movie",
+                            id: movie.imdbID
+                          }}
+                        >
+                          <ModalBody>
+                            <Media>
+                              <Media left className="search-pic">
+                                <img alt={movie.Title} src={movie.Poster} />
                               </Media>
-                            </ModalBody>
-                          </NavLink>
-                        ))
+                              <Media body className="media-title">
+                                <Media heading className="media-heading">
+                                  {index + 1}. {movie.Title} ({movie.Year})
+                                  </Media>
+                              </Media>
+                            </Media>
+                          </ModalBody>
+                        </NavLink>
+                      ))
                       : ""}
                   </Modal>
                 </NavItem>
@@ -442,17 +450,17 @@ class NavBar extends React.Component {
                         this.state.isOpen ? (
                           <IoMdLogOut className="nav-icon" />
                         ) : (
-                          "logout"
-                        )
+                            "logout"
+                          )
                       ) : (
-                        <IoMdLogOut className="nav-icon" />
-                      )}
+                          <IoMdLogOut className="nav-icon" />
+                        )}
                       {this.state.isOpen ? "   logout" : ""}
                     </NavLink>
                   </NavItem>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </Nav>
             </Collapse>
           </div>
