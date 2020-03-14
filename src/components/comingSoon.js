@@ -14,7 +14,9 @@ import {
 import classnames from 'classnames';
 import rp from "request-promise";
 import cheerio from "cheerio";
+import { FiPlusSquare, FiMinusSquare } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
+import { auth, db } from "./Firebase";
 
 class ComingSoon extends Component {
   constructor() {
@@ -23,10 +25,13 @@ class ComingSoon extends Component {
       value: 0,
       dates: [],
       activeTab: "",
-      apis: []
+      apis: [],
+      isSignedIn: false,
+      removeButton: []
     };
 
     this.handleWatchlist = this.handleWatchlist.bind(this);
+    this.setWatchList = this.setWatchList.bind(this);
   }
 
   async componentDidMount() {
@@ -70,6 +75,57 @@ class ComingSoon extends Component {
       .catch(function (err) {
         console.log(err);
       });
+
+    auth.onAuthStateChanged(user => {
+      let currentState = this
+      if (user) {
+        currentState.setState({
+          isSignedIn:true
+        })
+      }
+    })
+  }
+
+  setWatchList(id){
+    let userRef = db.collection("user").doc(auth.currentUser.email)
+    let removeButtonList = this.state.removeButton
+    if (removeButtonList.indexOf(id) > -1) {
+      var addIndex = removeButtonList.indexOf(id)
+      if (addIndex > -1) {
+            removeButtonList.splice(addIndex, 1)
+      }
+      userRef
+        .get()
+        .then(function (doc) {
+          var newWatchlist = doc.data().watchlist;
+          var index = newWatchlist.indexOf(id)
+          if (index > -1) {
+            newWatchlist.splice(index, 1)
+          }
+          userRef.update({
+            watchlist: newWatchlist
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+    else {
+      removeButtonList.push(id)
+      userRef
+        .get()
+        .then(function (doc) {
+          var newWatchlist = doc.data().watchlist;
+          newWatchlist.push(id)
+          userRef.update({
+            watchlist: newWatchlist
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+    this.setState({removeButton: removeButtonList})
   }
 
   handleWatchlist() { }
@@ -117,6 +173,28 @@ class ComingSoon extends Component {
                     {this.state.apis
                       .filter(data => data.Released.slice(3, 11) === item)
                       .map(data => {
+
+                        if (this.state.isSignedIn){
+                          var currentButtonList = this.state.removeButton
+                          var currentState = this
+                          db.collection("user").doc(auth.currentUser.email)
+                                .get()
+                                .then(function (doc) {
+                                  var newWatchlist = doc.data().watchlist;
+                                  var addIndex = newWatchlist.indexOf(data.imdbID)
+                                  if (addIndex > -1) {
+                                    currentButtonList.push(data.imdbID)
+                                    currentState.setState({
+                                      removeButton: currentButtonList
+                                    })
+                                  }
+                        
+                                })
+                                .catch(function(error) {
+                                  console.log("Error getting document:", error);
+                                });
+                          }  
+                        
                         return (
                           <Col xl="6" key={data.Title}>
                             <Media className="media-body">
@@ -145,6 +223,16 @@ class ComingSoon extends Component {
                                   >
                                     {data.Title}
                                   </NavLink>
+                                  {this.state.isSignedIn?
+                                  <button 
+                                    className="watchlist-btn" 
+                                    onClick={() => {
+                                      this.setWatchList(data.imdbID)
+                                    }}
+                                  >
+                                    {this.state.removeButton.indexOf(data.imdbID)===-1?<FiPlusSquare />:<FiMinusSquare />}
+                                  </button>
+                                  :""}
                                 </CardTitle>
                                 <CardSubtitle className="card-subtitles">
                                   {data.Rated} | {data.Runtime} | {data.Genre} |{" "}
