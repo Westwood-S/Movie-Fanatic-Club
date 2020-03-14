@@ -3,10 +3,22 @@
 
 import React from "react";
 import "../index.css";
-import { Media, Container, Row, Button } from "reactstrap";
 import { TiPlusOutline, TiMinusOutline } from "react-icons/ti";
 import { auth, db } from "./Firebase";
 import firebase from "firebase";
+import {
+  Button,
+  Card,
+  CardGroup,
+  CardText,
+  CardTitle,
+  CardSubtitle,
+  Container,
+  Row,
+  Col,
+  Media,
+  CardImg
+} from "reactstrap";
 
 class Movie extends React.Component {
   constructor(props) {
@@ -66,23 +78,23 @@ class Movie extends React.Component {
 
           auth.onAuthStateChanged(user => {
             let currentState = this, thisMovie = currentState.state.thisMovie
-            if (user && currentState.state.isMounted && thisMovie!== "") {
+            if (user && currentState.state.isMounted && thisMovie !== "") {
               var docRef = db.collection("user").doc(auth.currentUser.email);
-                docRef
-                  .get()
-                  .then(function (doc) {
-                    var newWatchlist = doc.data().watchlist;
-                    var index = newWatchlist.indexOf(thisMovie)
-                    if (index > -1) {
-                      currentState.setState({
-                        isAdd: true
-                      })
-                    }
-          
-                  })
-                  .catch(function(error) {
-                    console.log("Error getting document:", error);
-                  });
+              docRef
+                .get()
+                .then(function (doc) {
+                  var newWatchlist = doc.data().watchlist;
+                  var index = newWatchlist.indexOf(thisMovie)
+                  if (index > -1) {
+                    currentState.setState({
+                      isAdd: true
+                    })
+                  }
+
+                })
+                .catch(function (error) {
+                  console.log("Error getting document:", error);
+                });
             }
           })
         })
@@ -104,35 +116,7 @@ class Movie extends React.Component {
       .catch(err => {
         console.log(err);
       });
-
   }
-
-
-  /* checkExists(id) {
-    if (this.state.isAdd === "false") {
-      console.log("isadd")
-      db.collection("user")
-        .doc(auth.currentUser.email)
-        .get()
-        .then(function (doc) {
-          var newWatchlist = doc.data().watchlist;
-          var index = newWatchlist.indexOf(id)
-          if (index > -1) {
-            this.setState({
-              isAdd: true
-            })
-          }
-
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-
-      this.setState({
-        isAdd: !this.state.isAdd
-      })
-    }
-  } */
 
   setWatchList(id) {
     let userRef = db.collection("user").doc(auth.currentUser.email)
@@ -178,42 +162,32 @@ class Movie extends React.Component {
   }
 
   render() {
+    {/* 
+    The purpose of the code inside this 'render' is to map over the cast of the movie and divide them evenly into two arrays, because I want to
+    display the cast in two columns instead of one so that the page doesn't end up being too long. This way we can map over each of these two arrays
+    in their own card and build some html to return   
+    */}
+    var arr1 = [];
+    var arr2 = [];
+    var counter = 0;
+
+    if (this.state.movie.cast !== undefined) {
+      this.state.movie.cast.map(item => {
+        if (counter % 2 == 0) {
+          arr1.push(item);
+        } else {
+          arr2.push(item);
+        }
+        counter++;
+      })
+    }
 
     return (
       <Container key="">
         {this.state.movie ?
-          <div>
-            <Row>
+          <div id="card-body">
+            <div id="title-and-btn">
               <a title="if u stan imdb..." className="movie-title" rel="noopener noreferrer" target="_blank" href={"https://www.imdb.com/title/" + this.state.movie.id}>{this.state.movie.title} ({this.state.movie.year})</a>
-            </Row>
-            <Row>
-              <div className="movie-poster">
-                {this.state.movie.poster ?
-                  <a title="trailer is here!" className="movie-title" rel="noopener noreferrer" target="_blank" href={this.state.movie.trailer ? this.state.movie.trailer.link : "/"}>
-                    <img className="movie-actual-poster" alt={this.state.movie.title} src={this.state.movie.poster} />
-                  </a>
-                  : ""}
-
-              </div>
-            </Row>
-            <Row><div className="movie-director">directed by: {this.state.movies.Director}</div></Row>
-            <Row><div className="movie-info">{this.state.movies.Rated} | {this.state.movies.Runtime} | {this.state.movies.Released}</div></Row>
-            <Row><div className="movie-info">{this.state.movies.Country} | {this.state.movies.Language}</div></Row>
-            <Row><div className="movie-info">IMDb rating: {this.state.movies.imdbRating} | Metascore: {this.state.movies.Metascore}</div></Row>
-            {this.state.movies.Production ?
-              <Row><div className="movie-director">this.state.movies.Production</div></Row> : ""}
-            <Row><div className="movie-info">AWARDS: {this.state.movies.Awards}</div></Row>
-            <Row><div className="movie-info">PLOT: {this.state.movies.Plot}</div></Row>
-            {this.state.movie.cast ?
-              this.state.movie.cast.map(item => {
-                return (
-                  <Row key="yay"><div className="movie-actor">
-                    <a title="visit fav actor" className="movie-actor-link" rel="noopener noreferrer" target="_blank" href={'https://www.imdb.com/name/' + item.actor_id}>{item.actor}</a> as {item.character}
-                  </div></Row>
-                )
-              })
-              : ""}
-            <Row>
               <div className="movie-btn">
                 <Button
                   onClick={() => {
@@ -222,9 +196,72 @@ class Movie extends React.Component {
                   className="movie-rl-btn">{this.state.isAdd ? <TiMinusOutline /> : <TiPlusOutline />}
                 watchlist
               </Button>
-
               </div>
-            </Row>
+            </div>
+
+            <CardGroup>
+              <Card id="poster">
+                {this.state.movie.poster ?
+                  <CardImg top width="100%" src={this.state.movie.poster}>
+                  </CardImg>
+                  : ""}
+              </Card>
+              <Card>
+                <CardSubtitle>
+                  <div className="movie-director">Directed by: <div className="movie-info-inline">{this.state.movies.Director}</div></div>
+                </CardSubtitle>
+                <CardSubtitle>
+                  <div className="movie-info">{this.state.movies.Rated} | {this.state.movies.Runtime} | {this.state.movies.Released}</div>
+                </CardSubtitle>
+                <CardSubtitle>
+                  <div className="movie-director">Countries Released: <div className="movie-info">{this.state.movies.Country} </div></div>
+                </CardSubtitle>
+                <CardSubtitle>
+                  <div className="movie-director">Translations: <div className="movie-info">{this.state.movies.Language}</div></div>
+                </CardSubtitle>
+                <CardSubtitle>
+                  <div className="movie-director">IMDb rating: <div className="movie-info-inline">{this.state.movies.imdbRating}</div></div>
+                </CardSubtitle>
+                <CardSubtitle>
+                  <div className="movie-director">Metascore: <div className="movie-info-inline">{this.state.movies.Metascore}</div></div>
+                </CardSubtitle>
+                {this.state.movies.Production ?
+                  <CardSubtitle>
+                    <div className="movie-director">Production: <div className="movie-info-inline">{this.state.movies.Production}</div></div>
+                  </CardSubtitle> : ""}
+                <CardSubtitle>
+                  <div className="movie-director">Awards: <div className="movie-info">{this.state.movies.Awards}</div></div>
+                </CardSubtitle>
+                <CardSubtitle>
+                  <div className="movie-director">Plot: <div className="movie-info">{this.state.movies.Plot}</div></div>
+                </CardSubtitle>
+              </Card>
+            </CardGroup>
+            <div className="movie-title-2">Cast</div>
+            <CardGroup>
+              <Card>
+                {arr1 ?
+                  arr1.map(item => {
+                    return (
+                      <Row key="yay"><div className="movie-actor">
+                        <a title="visit fav actor" className="movie-actor-link" rel="noopener noreferrer" target="_blank" href={'https://www.imdb.com/name/' + item.actor_id}><div className="actor">{item.actor}</div></a> <div className="character"> as </div><div className="character">{item.character}</div>
+                      </div></Row>
+                    )
+                  })
+                  : ""}
+              </Card>
+              <Card>
+                {arr2 ?
+                  arr2.map(item => {
+                    return (
+                      <Row key="yay"><div className="movie-actor">
+                        <a title="visit fav actor" className="movie-actor-link" rel="noopener noreferrer" target="_blank" href={'https://www.imdb.com/name/' + item.actor_id}><div className="actor">{item.actor}</div></a> <div className="character"> as </div><div className="character">{item.character}</div>
+                      </div></Row>
+                    )
+                  })
+                  : ""}
+              </Card>
+            </CardGroup>
           </div>
           : <Media>wait a sec bru</Media>}
       </Container>

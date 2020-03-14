@@ -33,14 +33,14 @@ class InTheater extends Component {
         let apis = [];
         let $ = cheerio.load(html);
 
-        $(".lister-item-header a").each(function() {
+        $(".lister-item-header a").each(function () {
           let name = $(this)
             .prepend()
             .text();
 
           fetch(
             "https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/" +
-              name,
+            name,
             {
               method: "GET",
               headers: {
@@ -65,7 +65,7 @@ class InTheater extends Component {
           laoding: true
         });
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
       });
 
@@ -73,7 +73,7 @@ class InTheater extends Component {
       let currentState = this
       if (user) {
         currentState.setState({
-          isSignedIn:true
+          isSignedIn: true
         })
       }
     })
@@ -83,13 +83,13 @@ class InTheater extends Component {
     this.setState({ value });
   }
 
-  setWatchList(id, index){
+  setWatchList(id, index) {
     let userRef = db.collection("user").doc(auth.currentUser.email)
     let removeButtonList = this.state.removeButton
     if (removeButtonList.indexOf(index) > -1) {
       var addIndex = removeButtonList.indexOf(index)
       if (addIndex > -1) {
-            removeButtonList.splice(addIndex, 1)
+        removeButtonList.splice(addIndex, 1)
       }
       userRef
         .get()
@@ -121,10 +121,8 @@ class InTheater extends Component {
         .catch(function (error) {
           console.log(error)
         })
-
-     
     }
-    this.setState({removeButton: removeButtonList})
+    this.setState({ removeButton: removeButtonList })
   }
 
   render() {
@@ -151,77 +149,75 @@ class InTheater extends Component {
             {this.state.apis.length === 0 ? (
               <div>i&apos;m gettin there...</div>
             ) : (
-              this.state.apis.map((item, index) => {
-                if (this.state.isSignedIn){
-                  var currentButtonList = this.state.removeButton
-                  var currentState = this
-                  db.collection("user").doc(auth.currentUser.email)
-                        .get()
-                        .then(function (doc) {
-                          var newWatchlist = doc.data().watchlist;
-                          var addIndex = newWatchlist.indexOf(item.id)
-                          if (addIndex > -1) {
-                            currentButtonList.push(index)
-                            currentState.setState({
-                              removeButton: currentButtonList
-                            })
-                          }
-                
-                        })
-                        .catch(function(error) {
-                          console.log("Error getting document:", error);
-                        });
-                  }
-                
+                this.state.apis.map((item, index) => {
+                  if (this.state.isSignedIn) {
+                    var currentButtonList = this.state.removeButton
+                    var currentState = this
+                    db.collection("user").doc(auth.currentUser.email)
+                      .get()
+                      .then(function (doc) {
+                        var newWatchlist = doc.data().watchlist;
+                        var addIndex = newWatchlist.indexOf(item.id)
+                        if (addIndex > -1) {
+                          currentButtonList.push(index)
+                          currentState.setState({
+                            removeButton: currentButtonList
+                          })
+                        }
 
-                return (
-                  <Card key={item.title} className="card">
-                    <a
-                      title="traaaailer"
-                      href={item.trailer.link}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      <img alt={item.title} src={item.poster} />
-                    </a>
-                    <CardBody className="intheater-cardbody">
-                      <CardTitle>
-                        <NavLink
-                          to={{
-                            pathname: "./Movie",
-                            id: item.id
-                          }}
-                          className="card-titles"
-                          title="more info babe"
-                        >
-                          {item.title}
-                        </NavLink>
-                        {this.state.isSignedIn?
-                        <button 
-                          className="watchlist-btn" 
-                          onClick={() => {
-                            this.setWatchList(item.id, index)
-                          }}
-                        >
-                          {this.state.removeButton.indexOf(index)===-1?<FiPlusSquare />:<FiMinusSquare />}
-                        </button>
-                        :""}
-                      </CardTitle>
-                      <CardSubtitle>
-                        <FaImdb />
-                        {item.rating}
-                      </CardSubtitle>
-                      <CardSubtitle>
-                        <TiMediaFastForward />
-                        {item.length}
-                      </CardSubtitle>
-                      {/*<CardSubtitle>Director: </CardSuabtitle>*/}
-                      <CardText className="intheater-cardtext">Plot: {item.plot}</CardText>
-                    </CardBody>
-                  </Card>
-                );
-              })
-            )}
+                      })
+                      .catch(function (error) {
+                        console.log("Error getting document:", error);
+                      });
+                  }
+
+                  return (
+                    <Card key={item.title} className="card">
+                      <a
+                        title="traaaailer"
+                        href={item.trailer.link}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <img alt={item.title} src={item.poster} />
+                      </a>
+                      <CardBody className="intheater-cardbody">
+                        <CardTitle>
+                          <NavLink
+                            to={{
+                              pathname: "./Movie",
+                              id: item.id
+                            }}
+                            className="card-titles"
+                            title="more info babe"
+                          >
+                            {item.title}
+                          </NavLink>
+                          {this.state.isSignedIn ?
+                            <button
+                              className="watchlist-btn"
+                              onClick={() => {
+                                this.setWatchList(item.id, index)
+                              }}
+                            >
+                              {this.state.removeButton.indexOf(index) === -1 ? <FiPlusSquare /> : <FiMinusSquare />}
+                            </button>
+                            : ""}
+                        </CardTitle>
+                        <CardSubtitle>
+                          <FaImdb />
+                          {item.rating}
+                        </CardSubtitle>
+                        <CardSubtitle>
+                          <TiMediaFastForward />
+                          {item.length}
+                        </CardSubtitle>
+                        <CardText className="intheater-cardtext">Plot: {item.plot}</CardText>
+                      </CardBody>
+                    </Card>
+                  );
+                })
+              )}
           </Carousel>
         </div>
         <ComingSoon />

@@ -24,16 +24,10 @@ class Footer extends React.Component {
                 <NavItem >
                   <NavLink title="I stan Hitchcock!" className="nav-links" to="/">Home</NavLink>
                 </NavItem>
-                {/* <NavItem>
-                  <NavLink className="nav-links" to="/Watchlist">Watchlist</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink className="nav-links" to="/Explore">Explore</NavLink>
-                </NavItem> */}
               </Nav>
               <p style={{ margin: 0 }} title="Frankly, my dear, I don't give a damn.">
                 © {new Date().getFullYear()}{" "}
-                <GiFilmSpool /> Movie Fanatic Club
+                <GiFilmSpool /> Movie Fanatic Club TEST
               </p>
             </div>
           </Navbar>
