@@ -192,13 +192,17 @@ class NavBar extends React.Component {
       searchLoading: true,
       movies: []
     });
-
-    fetch("https://www.omdbapi.com/?apikey=1e54e73e&s=" + searchValue)
+    fetch("https://movie-database-imdb-alternative.p.rapidapi.com/?page=1&s=" + searchValue, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
+        "x-rapidapi-key": "c3bfcbae69msh2fefac5f7da67adp1d2687jsnade70055f49b"
+      }})
       .then(response => {
         response.json().then(data => {
           this.setState({
             movies: data.Search
-          });
+          }); 
         });
       })
       .catch(err => {

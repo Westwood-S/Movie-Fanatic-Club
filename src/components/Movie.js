@@ -10,12 +10,9 @@ import {
   Button,
   Card,
   CardGroup,
-  CardText,
-  CardTitle,
   CardSubtitle,
   Container,
   Row,
-  Col,
   Media,
   CardImg
 } from "reactstrap";
@@ -103,9 +100,12 @@ class Movie extends React.Component {
         console.log(err);
       });
 
-    fetch(
-      "https://www.omdbapi.com/?apikey=1e54e73e&i=" + this.props.location.id
-    )
+    fetch("https://movie-database-imdb-alternative.p.rapidapi.com/?i=" + this.props.location.id, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
+        "x-rapidapi-key": "c3bfcbae69msh2fefac5f7da67adp1d2687jsnade70055f49b"
+      }})
       .then(response => {
         response.json().then(data => {
           this.setState({
@@ -173,7 +173,7 @@ class Movie extends React.Component {
 
     if (this.state.movie.cast !== undefined) {
       this.state.movie.cast.map(item => {
-        if (counter % 2 == 0) {
+        if (counter % 2 === 0) {
           arr1.push(item);
         } else {
           arr2.push(item);
@@ -188,15 +188,7 @@ class Movie extends React.Component {
           <div id="card-body">
             <div id="title-and-btn">
               <a title="if u stan imdb..." className="movie-title" rel="noopener noreferrer" target="_blank" href={"https://www.imdb.com/title/" + this.state.movie.id}>{this.state.movie.title} ({this.state.movie.year})</a>
-              <div className="movie-btn">
-                <Button
-                  onClick={() => {
-                    this.setWatchList(this.state.movie.id)
-                  }}
-                  className="movie-rl-btn">{this.state.isAdd ? <TiMinusOutline /> : <TiPlusOutline />}
-                watchlist
-              </Button>
-              </div>
+              
             </div>
 
             <CardGroup>
@@ -205,13 +197,23 @@ class Movie extends React.Component {
                   <CardImg top width="100%" src={this.state.movie.poster}>
                   </CardImg>
                   : ""}
+                <div className="movie-btn">
+                <Button
+                  onClick={() => {
+                    this.setWatchList(this.state.movie.id)
+                  }}
+                  className="movie-rl-btn">{this.state.isAdd ? <TiMinusOutline /> : <TiPlusOutline />}
+                watchlist
+              </Button>
+              </div>
               </Card>
               <Card>
-                <CardSubtitle>
-                  <div className="movie-director">Directed by: <div className="movie-info-inline">{this.state.movies.Director}</div></div>
-                </CardSubtitle>
+              
                 <CardSubtitle>
                   <div className="movie-info">{this.state.movies.Rated} | {this.state.movies.Runtime} | {this.state.movies.Released}</div>
+                </CardSubtitle>
+                <CardSubtitle>
+                  <div className="movie-director">Directed by: <div className="movie-info-inline">{this.state.movies.Director}</div></div>
                 </CardSubtitle>
                 <CardSubtitle>
                   <div className="movie-director">Countries Released: <div className="movie-info">{this.state.movies.Country} </div></div>

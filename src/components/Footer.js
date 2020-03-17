@@ -27,7 +27,7 @@ class Footer extends React.Component {
               </Nav>
               <p style={{ margin: 0 }} title="Frankly, my dear, I don't give a damn.">
                 © {new Date().getFullYear()}{" "}
-                <GiFilmSpool /> Movie Fanatic Club TEST
+                <GiFilmSpool /> Movie Fanatic Club
               </p>
             </div>
           </Navbar>

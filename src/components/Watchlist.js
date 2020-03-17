@@ -87,8 +87,12 @@ class Watchlist extends React.Component {
               if (doc.exists) {
                 for (let i = 0; i < doc.data().watchlist.length; i++) {
                   let name = doc.data().watchlist[i];
-                  const URL = "https://www.omdbapi.com/?apikey=1e54e73e&i=" + name;
-                  fetch(URL)
+                  fetch("https://movie-database-imdb-alternative.p.rapidapi.com/?i=" + name, {
+                    "method": "GET",
+                    "headers": {
+                      "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
+                      "x-rapidapi-key": "c3bfcbae69msh2fefac5f7da67adp1d2687jsnade70055f49b"
+                    }})
                     .then(result => result.json())
                     .then(result => {
                       currentComponent.setAPIState(result);

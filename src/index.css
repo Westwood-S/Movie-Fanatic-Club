@@ -25,6 +25,8 @@
 body {
   margin: 0;
   font-family: "Sriracha", cursive;
+  height: 1500px;
+
 }
 
 a:hover {
@@ -509,13 +511,22 @@ img {
 /* movie */
 .movie-title {
   padding: 5rem 0 0 0;
-  padding-left: 15vw;
-  font-size: 4rem;
+  font-size: 3rem;
   text-align: center;
   font-family: "optimus";
-  color:black;
+  color: rgb(22, 3, 192);
   margin-top: 20px;
   margin-bottom: 40px;
+}
+@media screen and (max-width: 984px) {
+  .movie-title {
+    font-size: 2.5rem;
+  }
+}
+@media screen and (max-width: 762px) {
+  .movie-title {
+    font-size: 2.5rem;
+  }
 }
 .movie-title-2 {
   padding: 3rem 0 0 0;
@@ -538,6 +549,7 @@ img {
 #title-and-btn {
   margin-top: 30px;
   align-content: center;
+  text-align: center;
 }
 
 .movie-title:hover {
@@ -646,16 +658,16 @@ img {
   color: black;
   font-size: 2rem;
   display: inline;
+  text-align: center;
 }
 
 .movie-rl-btn {
-  background-color: rgb(248, 247, 247);
+  background-color: white;
+  border: none;
   color: black;
   font-size: 1.5rem;
   font-family: Helvetica;
   display: inline-block;
-  margin-bottom: 2rem;
-  margin-left: 5rem;
 }
 
 .watchlist-btn{
@@ -684,7 +696,7 @@ img {
 /* responsive */
 
 .watchlist {
-  height: 1400px;
+  height: 2400px;
 }
 
 @media screen and (max-width: 450px) {
