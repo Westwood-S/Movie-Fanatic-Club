@@ -176,7 +176,7 @@ class ComingSoon extends Component {
                 <TabPane tabId={item} key={item}>
                   <Row>
                     {this.state.apis
-                      .filter(data => data.Released.slice(3, 11) === item)
+                      // .filter(data => data.Released.slice(3, 11) === item)
                       .map(data => {
 
                         if (this.state.isSignedIn){
@@ -198,7 +198,7 @@ class ComingSoon extends Component {
                                 .catch(function(error) {
                                   console.log("Error getting document:", error);
                                 });
-                          }  
+                        }  
                         
                         return (
                           <Col xl="6" key={data.Title}>
